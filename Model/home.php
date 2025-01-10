@@ -7,6 +7,3 @@ function getArticles(PDO $pdo)
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
-?>
-
