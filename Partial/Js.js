@@ -1,10 +1,10 @@
-document.addEventListener("DOMContentLoaded", function () {
-  function attachLinkEventListeners() {
+document.addEventListener("DOMContentLoaded", () => {
+  const attachLinkEventListeners = () => {
     document.querySelectorAll(".link").forEach((link) => {
-      link.addEventListener("click", function (e) {
+      link.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const targetUrl = new URL(this.href, window.location.origin);
+        const targetUrl = new URL(link.href, window.location.origin);
 
         fetch(targetUrl)
           .then((response) => {
@@ -14,46 +14,58 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.text();
           })
           .then((html) => {
-            document.querySelector(".container").innerHTML = html;
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+
+            const content = tempDiv.querySelector(".container").innerHTML;
+
+            document.querySelector(".container").innerHTML = content;
+
             history.pushState({}, "", targetUrl);
             attachLinkEventListeners();
           })
           .catch((error) => {
-            console.error(error);
+            console.error("Error during fetch:", error);
           });
       });
     });
-  }
+  };
 
-  document.querySelector("#aaa").addEventListener("submit", function (e) {
+  document.querySelector("#aaa").addEventListener("submit", (e) => {
     e.preventDefault();
 
-
-    var searchTerm = document.getElementById("searchImput").value;
-
-    if (searchTerm) {
-      console.log('aaa');
-      
-      var search_Url = `index.php?component=search&q=${encodeURIComponent(
-        searchTerm
-      )}`;
-
-      fetch(search_Url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Erreur 404");
-          }
-          return response.text();
-        })
-        .then((html) => {
-          document.querySelector(".container").innerHTML = html;
-          history.pushState({}, "", search_Url);
-          attachLinkEventListeners();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    const searchTerm = document.getElementById("searchImput").value;
+    if (searchTerm === "") {
+      alert("Erreur : Aucun terme de recherche renseigné");
+      return;
     }
+
+    const searchUrl = `index.php?component=search&q=${encodeURIComponent(
+      searchTerm
+    )}`;
+
+    fetch(searchUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erreur 404");
+        }
+        return response.text();
+      })
+      .then((html) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
+
+        const content = tempDiv.querySelector(".container").innerHTML;
+
+        document.querySelector(".container").innerHTML = content;
+
+        history.pushState({}, "", searchUrl);
+        attachLinkEventListeners();
+      })
+      .catch((error) => {
+        console.error("Error during search fetch:", error);
+      });
   });
+
   attachLinkEventListeners();
 });

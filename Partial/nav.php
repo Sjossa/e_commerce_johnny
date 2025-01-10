@@ -1,9 +1,9 @@
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a  href="index.php" class="link">home</a>
+    <a  href="index.php?conponent=home" class="link">home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a href="?component=search&action" class="link">search</a>
+          <a href="index.php?component=search" class="link">search</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
@@ -36,13 +36,27 @@
         </li>
       </ul>
       <form class="d-flex" role="search" id="aaa" method="get">
-    <input class="form-control me-2" type="search"  id="searchImput" value="" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success"  type="submit">recherche</button>
-</form>
+        <input class="form-control me-2" type="search"  id="searchImput" placeholder="Search">
+        <button class="btn btn-outline-success" id="al"  type="submit">recherche</button>
+      </form>
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+          <a class="link" href="aaaaaa">se connecter</a>
+        </li>
 
+        <li class="nav-item">
+          <a class="link" href="#">s'inscrire</a>
+        </li>
+</ul>
 
     </div>
   </div>
 </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script>
+
+
+  </script>
+
+
