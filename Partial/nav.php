@@ -1,9 +1,6 @@
-
-
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a  href="index.php?conponent=home" class="link">home</a>
+    <a href="index.php?component=home" class="link">home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -35,28 +32,33 @@
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>
       </ul>
-      <form class="d-flex" role="search" id="aaa" method="get">
-        <input class="form-control me-2" type="search"  id="searchImput" placeholder="Search">
-        <button class="btn btn-outline-success" id="al"  type="submit">recherche</button>
+      <form class="d-flex" role="search" id="aaa">
+        <input class="form-control me-2" type="search" id="searchInput" placeholder="Search">
+        <button class="btn btn-outline-success" id="al" type="button">recherche</button>
       </form>
-<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-          <a class="link" href="aaaaaa">se connecter</a>
-        </li>
 
-        <li class="nav-item">
-          <a class="link" href="#">s'inscrire</a>
-        </li>
-</ul>
+
+      <ul>
+        <li><a class="link" href="index.php?component=login">connexion</a></li>
+      </ul>
+
+      <ul>
+        <li><a class="link" href="index.php?component=inscription">inscription</a></li>
+      </ul>
+      <?php
+      if (isset($_SESSION['role']) && ($_SESSION['role'] === 'manager' || $_SESSION['role'] === 'admin'))
+        echo '<button>Admin Panel</button>';
+      ?>
+
 
     </div>
   </div>
 </nav>
 
 
-  <script>
 
 
-  </script>
+<script>
 
 
+</script>

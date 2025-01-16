@@ -10,6 +10,5 @@
 
 <?php elseif (!empty($_GET['q'])): ?>
   <p>Aucun article trouvé pour votre recherche.</p>
-
 <?php endif; ?>
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
