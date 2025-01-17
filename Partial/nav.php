@@ -47,7 +47,7 @@
       </ul>
       <?php
       if (isset($_SESSION['role']) && ($_SESSION['role'] === 'manager' || $_SESSION['role'] === 'admin'))
-        echo '<button>Admin Panel</button>';
+        echo '<button> <a class="link" href="index.php?component=articles">crud</a> </button>';
       ?>
 
 

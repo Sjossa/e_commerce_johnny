@@ -1,10 +1,11 @@
-import { loadContentFromUrl } from "./fetch.js"; // Importer la fonction
+import { loadContentFromUrl } from "./fetch.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".container");
   const formsearch = document.getElementById("aaa");
-  const searchInput = document.getElementById("searchInput"); // Idem ici
+  const searchInput = document.getElementById("searchInput");
 
+  // Vérification de l'existence des éléments
   if (!container) {
     console.error("Erreur : l'élément '.container' est introuvable.");
     return;
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Gestion de l'événement de soumission du formulaire
   formsearch.addEventListener("click", (e) => {
-    e.preventDefault(); // Éviter un comportement inattendu si ce n'est pas un bouton
+    e.preventDefault();
     console.log("Recherche effectuée");
 
     const searchTerm = searchInput.value.trim();
@@ -49,8 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchUrl = `index.php?component=search&q=${encodeURIComponent(
       searchTerm
     )}`;
+
     loadContentFromUrl(searchUrl, container, attachLinkEventListeners);
   });
+
+
+
 
   attachLinkEventListeners();
 });
