@@ -2,8 +2,8 @@ import { loadContentFromUrl } from "./fetch.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".container");
-  const formsearch = document.getElementById("aaa");
-  const searchInput = document.getElementById("searchInput");
+  const formsearch = document.querySelector(".form-Articles");
+  const searchInput = document.querySelector(".Search-articles");
 
   // Vérification de l'existence des éléments
   if (!container) {
@@ -11,12 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
   if (!formsearch) {
-    console.error("Erreur : l'élément avec l'ID 'aaa' est introuvable.");
+    console.error(
+      "Erreur : l'élément avec l'ID 'form-Articles' est introuvable."
+    );
     return;
   }
   if (!searchInput) {
     console.error(
-      "Erreur : l'élément avec l'ID 'searchInput' est introuvable."
+      "Erreur : l'élément avec l'ID 'Search-articles' est introuvable."
     );
     return;
   }
@@ -38,12 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Gestion de l'événement de soumission du formulaire
   formsearch.addEventListener("click", (e) => {
+
+
     e.preventDefault();
-    console.log("Recherche effectuée");
+
 
     const searchTerm = searchInput.value.trim();
     if (!searchTerm) {
-      console.warn("Le champ de recherche est vide.");
       return;
     }
 

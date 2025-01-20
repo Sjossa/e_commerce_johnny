@@ -1,90 +1,99 @@
 <?php if (!empty($posts)): ?>
-  <!-- Boutons pour accéder aux formulaires -->
+
+  <!-- Section des actions -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <a href="index.php?component=article&create" class="btn btn-success">
-      Ajouter un article
+    <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center">
+      <i class="bi bi-plus-circle me-2"></i> Ajouter un article
     </a>
-    <button id="bbbb" class="btn btn-primary">
-      Ajouter une catégorie
+    <button id="bbbb" class="btn btn-primary  align-items-center">
+      <i class="bi bi-folder-plus me-2"></i> Ajouter une catégorie
     </button>
   </div>
 
-  <!-- Barre de recherche -->
-  <div class="mb-3">
-    <input type="text" id="SearchArticle" class="form-control" placeholder="Recherchez un article par nom ou description">
-  </div>
 
   <!-- Tableau des articles -->
-  <table class="table table-bordered table-hover shadow-sm" id="articleTable">
-    <thead class="table-light">
-      <tr>
-        <th scope="col">Nom</th>
-        <th scope="col">Description</th>
-        <th scope="col">Image</th>
-        <th scope="col">Stock</th>
-        <th scope="col">Catégorie</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($posts as $post): ?>
+  <div class="table-responsive shadow-sm">
+    <table class="table table-striped table-bordered table-hover" id="articleTable">
+      <thead class="table-primary text-center">
         <tr>
-          <td><?= htmlspecialchars($post['nom'], ENT_QUOTES, 'UTF-8'); ?></td>
-          <td><?= htmlspecialchars($post['description'], ENT_QUOTES, 'UTF-8'); ?></td>
-          <td>
-            <img src="<?= htmlspecialchars($post['image'], ENT_QUOTES, 'UTF-8'); ?>" alt="Image"
-              class="img-thumbnail" style="width: 100px; height: auto;">
-          </td>
-          <td><?= htmlspecialchars($post['stock'], ENT_QUOTES, 'UTF-8'); ?></td>
-          <td><?= htmlspecialchars($post['categories_nom'], ENT_QUOTES, 'UTF-8'); ?></td>
-          <td>
-            <a href="index.php?component=article&id=<?= $post['id_article']; ?>"
-              class="btn btn-warning btn-sm">Modifier</a>
-            <a href="index.php?component=articles&id=<?= $post['id_article']; ?>"
-              class="btn btn-danger btn-sm" id="btn-Delete">Supprimer</a>
-          </td>
+          <th scope="col">
+            <a href="index.php?component=articles&tri=nom&articles=<?= $page ?>"
+              class="text-decoration-none link">Nom</a>
+          </th>
+          <th scope="col">Description</th>
+          <th scope="col">Image</th>
+          <th scope="col">
+            <a href="index.php?component=articles&tri=stock&articles=<?= $page ?>"
+              class="text-decoration-none link">Stock</a>
+          </th>
+          <th scope="col"><a
+              href="index.php?component=articles&tri=categories_nom&articles=<?= $page ?>"
+              class="text-decoration-none link">Catégorie</a></th>
+          <th scope="col">Actions</th>
         </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-<?php else: ?>
-  <p>Aucun article trouvé.</p>
-
-  <!-- Boutons visibles même si la liste est vide -->
-  <div class="mt-3">
-    <a href="index.php?component=article" class="btn btn-success">
-      Ajouter un article
-    </a>
-    <a href="#" class="btn btn-primary float-end">
-      Ajouter une catégorie
-    </a>
+      </thead>
+      <tbody>
+        <?php foreach ($posts as $post): ?>
+          <tr>
+            <td><?= htmlspecialchars($post['nom'], ENT_QUOTES, 'UTF-8'); ?></td>
+            <td><?= htmlspecialchars($post['description'], ENT_QUOTES, 'UTF-8'); ?></td>
+            <td class="text-center">
+              <img src="<?= htmlspecialchars($post['image'], ENT_QUOTES, 'UTF-8'); ?>"
+                alt="Image de l'article" class="img-thumbnail" style="max-width: 100px;">
+            </td>
+            <td class="text-center"><?= htmlspecialchars($post['stock'], ENT_QUOTES, 'UTF-8'); ?></td>
+            <td>
+              <?= isset($post['categories_nom']) ? htmlspecialchars($post['categories_nom'], ENT_QUOTES, 'UTF-8') : 'Aucune catégorie'; ?>
+            </td>
+            <td class="text-center">
+              <a href="index.php?component=article&id_article=<?= $post['id_article']; ?>"
+                class="btn btn-warning btn-sm link">
+                <i class="bi bi-pencil-square"></i> Modifier
+              </a>
+              <a href="index.php?component=articles&id_article=<?= $post['id_article']; ?>"
+                class="btn btn-danger btn-sm link" id="btn-Delete">
+                <i class="bi bi-trash"></i> Supprimer
+              </a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
   </div>
-<?php endif; ?>
 
+  <!-- Pagination -->
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <?php if ($page > 1): ?>
+        <li class="page-item">
+          <a href="index.php?component=articles&articles=<?= $page - 1 ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
+            class="page-link link">Précédent</a>
+        </li>
+      <?php endif; ?>
+      <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+          <a href="index.php?component=articles&articles=<?= $i ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
+            class="page-link link"><?= $i ?></a>
+        </li>
+      <?php endfor; ?>
+      <?php if ($page < $totalPages): ?>
+        <li class="page-item">
+          <a href="index.php?component=articles&articles=<?= $page + 1 ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
+            class="page-link link">Suivant</a>
+        </li>
+      <?php endif; ?>
+    </ul>
+  </nav>
+
+<?php else: ?>
+  <p class="text-center text-muted">Aucun article trouvé.</p>
+<?php endif; ?>
 
 <script>
   const btnCategories = document.getElementById("bbbb");
-  const SearchArticlet = document.getElementById("SearchArticle");
-  const table = document.getElementById("articleTable");
-  const rows = table.querySelectorAll("tbody tr");
-
-  // Gestion de la recherche
-  SearchArticlet.addEventListener("input", (e) => {
-    const query = e.target.value.toLowerCase();
-    console.log("aaa");
 
 
-    rows.forEach(row => {
-      const name = row.cells[0].textContent.toLowerCase();
-      const description = row.cells[1].textContent.toLowerCase();
 
-      if (name.includes(query) || description.includes(query)) {
-        row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
-    });
-  });
 
   // Bouton Ajouter une catégorie
   btnCategories.addEventListener("click", () => {

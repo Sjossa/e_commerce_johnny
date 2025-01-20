@@ -1,14 +1,13 @@
 <?php
 require 'Model/article.php';
 
-$id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int) $_GET['id'] : 0;
+$id = isset($_GET['id_article']) && is_numeric($_GET['id_article']) ? (int) $_GET['id_article'] : 0;
 $create = isset($_GET['create']);
 
 $categories = recupcategorie($pdo);
 
 if ($id > 0) {
 
-  // Vérifier si l'article existe
   $stmt = validitéArticle($pdo, $id);
 
   if ($stmt->fetchColumn() > 0) {
