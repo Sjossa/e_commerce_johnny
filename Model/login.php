@@ -13,7 +13,6 @@ function verifUser(PDO $pdo, $email, $password)
   $stmt->execute();
   $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  var_dump($result);
 
   if ($result) {
     $validPassword = $result['password'];

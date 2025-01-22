@@ -1,25 +1,68 @@
+<style>
+  /* Styles généraux pour le menu */
+  .navbar {
+    font-size: 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: #0d6efd;
+    /* Bleu clair Bootstrap */
+  }
+
+  /* Bouton de recherche */
+  .input-group .form-control {
+    min-width: 250px;
+    border-radius: 25px;
+  }
+
+  .input-group .btn {
+    border-radius: 25px;
+    font-size: 0.9rem;
+  }
+
+  /* Icône panier */
+  .bi-bag {
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .bi-bag:hover {
+    transform: scale(1.2);
+    color: #dc3545;
+    /* Rouge Bootstrap */
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
-    <!-- Logo ou Home -->
+    <!-- Logo -->
     <a href="index.php?component=home" class="navbar-brand fw-bold text-primary">Home</a>
 
-    <!-- Bouton pour le menu burger -->
+    <!-- Bouton menu burger -->
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
+      data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Contenu du menu -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <!-- Menu principal -->
+    <div class="collapse navbar-collapse" id="navbarMenu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- CRUD pour Manager/Admin -->
+        <!-- Liens pour les rôles Manager/Admin -->
         <?php if (isset($_SESSION['role']) && ($_SESSION['role'] === 'manager' || $_SESSION['role'] === 'admin')): ?>
           <li class="nav-item">
-            <a class="nav-link text-primary fw-bold" href="index.php?component=articles">Articles</a>
+            <a href="index.php?component=articles" class="nav-link text-primary fw-bold">Articles</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary fw-bold" href="index.php?component=users">users</a>
+            <a href="index.php?component=users" class="nav-link text-primary fw-bold">Utilisateurs</a>
           </li>
         <?php endif; ?>
       </ul>
@@ -28,36 +71,40 @@
       <ul class="navbar-nav ms-3">
         <?php if (!isset($_SESSION['role']) || empty($_SESSION['role'])): ?>
           <li class="nav-item">
-            <a class="nav-link text-primary fw-bold" href="index.php?component=login">Connexion</a>
+            <a href="index.php?component=login" class="nav-link text-primary fw-bold">Connexion</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary fw-bold"
-              href="index.php?component=inscription">Inscription</a>
+            <a href="index.php?component=inscription"
+              class="nav-link text-primary fw-bold">Inscription</a>
           </li>
         <?php else: ?>
+          <ul class="navbar-nav ms-3">
           <li class="nav-item">
-            <a class="nav-link text-danger fw-bold" href="Partial/deconexion.php">Déconnexion</a>
+            <a href="index.php?component=articles_promotion"
+              class="nav-link text-primary fw-bold">Promotion</a>
+          </li>
+        </ul>
+          <li class="nav-item">
+            <a href="Partial/deconexion.php" class="nav-link text-danger fw-bold">Déconnexion</a>
           </li>
         <?php endif; ?>
       </ul>
 
-
-        <form class="d-flex ms-3 form-Articles" role="search">
-          <div class="input-group">
-            <input class="form-control rounded-pill border-0 shadow-sm Search-articles" type="search"
-              placeholder="Recherche" aria-label="Search">
-            <button class="btn btn-outline-primary rounded-pill shadow-sm ms-2"
-              type="submit">Recherche</button>
-          </div>
+      <!-- Lien Promotion (uniquement pour les "customer") -->
 
 
-    </div>
-  </form>
-        </form>
-
+      <!-- Barre de recherche -->
+      <form class="d-flex ms-3" role="search">
+        <div class="input-group">
+          <input type="search" class="form-control rounded-pill shadow-sm" placeholder="Recherche"
+            aria-label="Search">
+          <button type="submit"
+            class="btn btn-outline-primary rounded-pill shadow-sm ms-2">Rechercher</button>
+        </div>
+      </form>
 
       <!-- Icône Panier -->
-      <a class="bi bi-bag text-danger fs-4 ms-3" href="index.php?component=cart"></a>
+      <a href="index.php?component=cart" class="bi bi-bag text-danger fs-4 ms-3"></a>
     </div>
   </div>
 </nav>

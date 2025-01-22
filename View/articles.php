@@ -5,11 +5,10 @@
     <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center">
       <i class="bi bi-plus-circle me-2"></i> Ajouter un article
     </a>
-    <button id="bbbb" class="btn btn-primary  align-items-center">
+    <button id="bbbb" class="btn btn-primary d-flex align-items-center">
       <i class="bi bi-folder-plus me-2"></i> Ajouter une catégorie
     </button>
   </div>
-
 
   <!-- Tableau des articles -->
   <div class="table-responsive shadow-sm">
@@ -26,9 +25,11 @@
             <a href="index.php?component=articles&tri=stock&articles=<?= $page ?>"
               class="text-decoration-none link">Stock</a>
           </th>
-          <th scope="col"><a
-              href="index.php?component=articles&tri=categories_nom&articles=<?= $page ?>"
-              class="text-decoration-none link">Catégorie</a></th>
+          <th scope="col">
+            <a href="index.php?component=articles&tri=categories_nom&articles=<?= $page ?>"
+              class="text-decoration-none link">Catégorie</a>
+          </th>
+          <th scope="col">prix</span></th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -39,19 +40,51 @@
             <td><?= htmlspecialchars($post['description'], ENT_QUOTES, 'UTF-8'); ?></td>
             <td class="text-center">
               <img src="<?= htmlspecialchars($post['image'], ENT_QUOTES, 'UTF-8'); ?>"
-                alt="Image de l'article" class="img-thumbnail" style="max-width: 100px;">
+                alt="Image de l'article" class="img-fluid img-thumbnail" style="max-width: 100px;">
             </td>
             <td class="text-center"><?= htmlspecialchars($post['stock'], ENT_QUOTES, 'UTF-8'); ?></td>
             <td>
               <?= isset($post['categories_nom']) ? htmlspecialchars($post['categories_nom'], ENT_QUOTES, 'UTF-8') : 'Aucune catégorie'; ?>
             </td>
+
+
+            <td>
+    <?php
+    if (isset($post['pourcentage']) && isset($post['prix'])) {
+        // Afficher le prix barré
+        echo '<span style="text-decoration: line-through;">'
+            . htmlspecialchars($post['prix'], ENT_QUOTES, 'UTF-8')
+            . '</span><br>';
+
+        // Afficher le texte "en promotion" suivi du prix après réduction
+        if ($post['pourcentage'] != 0) {
+            echo "En promotion : "
+                . htmlspecialchars($post['prix'] * (1 - $post['pourcentage'] / 100), ENT_QUOTES, 'UTF-8');
+        } else {
+            echo "Erreur : le pourcentage ne peut pas être 0.";
+        }
+    } elseif (isset($post['prix'])) {
+        // Afficher uniquement le prix si le pourcentage n'existe pas
+        echo htmlspecialchars($post['prix'], ENT_QUOTES, 'UTF-8');
+    } else {
+        // Si rien n'est défini, afficher un message d'erreur
+        echo 'Erreur : pas de prix.';
+    }
+    ?>
+</td>
+
+
+
+
+
+
             <td class="text-center">
               <a href="index.php?component=article&id_article=<?= $post['id_article']; ?>"
-                class="btn btn-warning btn-sm link">
+                class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil-square"></i> Modifier
               </a>
               <a href="index.php?component=articles&id_article=<?= $post['id_article']; ?>"
-                class="btn btn-danger btn-sm link" id="btn-Delete">
+                class="btn btn-danger btn-sm" id="btn-Delete">
                 <i class="bi bi-trash"></i> Supprimer
               </a>
             </td>
@@ -91,8 +124,14 @@
 
 <script>
   const btnCategories = document.getElementById("bbbb");
-
-
+  const deleteBtns = document.querySelectorAll("#btn-Delete");
+  deleteBtns.forEach(btn => {
+    btn.addEventListener("click", function (event) {
+      if (!confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
+        event.preventDefault();
+      }
+    });
+  });
 
 
   // Bouton Ajouter une catégorie
@@ -116,7 +155,7 @@
       form.action = "index.php?component=articles&categorie";
 
       const button = document.createElement("button");
-      button.textContent = "Envoyer la valeur";
+      button.textContent = "Envoyer";
       button.type = "submit";
       button.classList.add("btn", "btn-primary");
 

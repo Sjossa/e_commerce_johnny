@@ -1,4 +1,4 @@
-<?php if (isset($posts) && $posts): ?>
+
 
   <h2>Résultats de recherche</h2>
 

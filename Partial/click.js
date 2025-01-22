@@ -31,12 +31,21 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Gestionnaire de clic sur les liens
-  const handleLinkClick = (e) => {
-    e.preventDefault();
-    const targetUrl = new URL(e.currentTarget.href, window.location.origin);
-    history.pushState({}, "", targetUrl);
-    loadContentFromUrl(targetUrl, container, attachLinkEventListeners);
-  };
+ const handleLinkClick = (e) => {
+   e.preventDefault();
+   const targetUrl = new URL(e.currentTarget.href, window.location.origin); // Crée l'URL cible
+
+   // Vérifie si l'URL ciblée est la même que l'URL actuelle
+   if (
+     targetUrl.pathname === window.location.pathname &&
+     targetUrl.search === window.location.search
+   ) {
+     return;
+   }
+   history.pushState({}, "", targetUrl);
+   loadContentFromUrl(targetUrl, container, attachLinkEventListeners);
+ };
+
 
   // Gestion de l'événement de soumission du formulaire
   formsearch.addEventListener("click", (e) => {

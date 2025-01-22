@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 CreationUser($pdo,$username,$email,$password,$verifpassword);
 
+header('Location index.php?component=login');
 }
 require "View/inscription.php";
 

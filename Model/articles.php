@@ -16,10 +16,13 @@ function listeArticles(PDO $pdo, $page, $tri = '')
                     articles.nom,
                     articles.image,
                     articles.stock,
+                    articles.prix,
                     articles.description,
-                    categories.nom AS categories_nom
+                    categories.nom AS categories_nom,
+                    discount_percentage AS pourcentage
              FROM articles
              LEFT JOIN categories ON articles.id_categorie = categories.id_categorie
+             LEFT JOIN promotions ON  articles.id_promotion = promotions.id_promotion
              $triColonne
              LIMIT :perpage OFFSET :offset;";
 
@@ -80,14 +83,39 @@ function DeleteArticles(PDO $pdo, $articleId)
 
 function UpCategorie(PDO $pdo, $categorie)
 {
-    $query = "INSERT INTO categories (nom) VALUES (:nom)";
-    $stmt = $pdo->prepare($query);
+  $promotion = isset($_POST['promotion_creation']) && $_POST['promotion_creation'] !== ""
+    ? $_POST['promotion_creation'] // Si une promotion manuelle est définie
+    : $_POST['promotion']; // Sinon, prendre la promotion existante
 
-    // Lier le paramètre à la variable $categorie
-    $stmt->bindParam(':nom', $categorie);
-
-    // Exécuter la requête
+  if ($promotion > 0) {
+    // Si c'est un pourcentage, il peut falloir insérer une nouvelle promotion
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM promotions WHERE discount_percentage = :promotion");
+    $stmt->bindParam(':promotion', $promotion);
     $stmt->execute();
+    $count = $stmt->fetchColumn();
+
+    if ($count == 0) {
+      // Insertion d'une nouvelle promotion avec ce pourcentage
+      $queryInsert = "INSERT INTO promotions (discount_percentage) VALUES (:promotion)";
+      $stmtInsert = $pdo->prepare($queryInsert);
+      $stmtInsert->bindParam(':promotion', $promotion);
+      $stmtInsert->execute();
+
+      // Récupérer l'ID de la nouvelle promotion insérée
+      $newPromotionId = $pdo->lastInsertId();
+    } else {
+      // Récupérer l'ID de la promotion existante
+      $querySelect = "SELECT id_promotion FROM promotions WHERE discount_percentage = :promotion";
+      $stmtSelect = $pdo->prepare($querySelect);
+      $stmtSelect->bindParam(':promotion', $promotion);
+      $stmtSelect->execute();
+      $newPromotionId = $stmtSelect->fetchColumn();
+    }
+  } else {
+    // Si aucune promotion sélectionnée ou définie, promotion sera NULL ou 0
+    $newPromotionId = null;
+  }
+
 }
 
 

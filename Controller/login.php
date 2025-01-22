@@ -16,11 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['role'] = $verifUser['role'];
 
 
-      header('Location: index.php');
+      header('Location: index.php?component=home');
       exit;
     } else {
-  
-      header('Location: login.php');
+
+      header('Partial/error.php');
       exit;
     }
   } else {
