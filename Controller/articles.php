@@ -1,10 +1,7 @@
 <?php
 
 // Vérification de rôle de l'utilisateur
-if (!isset($_SESSION['role'])) {
-  header('Location: index.php');
-  exit;
-} else {
+
   require "Model/articles.php";
 
   // Pagination
@@ -57,4 +54,4 @@ if ($tri) {
 
   // Inclure la vue
   require "View/articles.php";
-}
+

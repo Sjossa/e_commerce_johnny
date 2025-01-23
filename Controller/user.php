@@ -1,4 +1,5 @@
 <?php
+
 require 'Model/user.php'; // Inclusion du modèle
 
 // Récupération et validation de l'ID

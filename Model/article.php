@@ -99,14 +99,14 @@ function UpdateArticle(PDO $pdo, $id_article, $nom, $description, $image, $prix,
     $stmt->bindParam(':categorie', $categorie);
     $stmt->bindParam(':promotion', $promotion, PDO::PARAM_INT);
     $stmt->bindParam(':id_article', $id_article, PDO::PARAM_INT);
-
     try {
         $stmt->execute();
-        return true; // La mise à jour a réussi
+        return true;
     } catch (PDOException $e) {
-        error_log("Erreur PDO: " . $e->getMessage()); // Capture de l'erreur dans le log
-        return false; // Si une exception se produit, on retourne false
+        error_log("Erreur PDO: " . $e->getMessage());
+        return false;
     }
 }
+
 
 

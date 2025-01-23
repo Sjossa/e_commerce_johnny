@@ -1,3 +1,5 @@
+<?php require "Partial/securite.php"; ?>
+
 <?php if (!empty($posts)): ?>
 
   <!-- Section des actions -->
@@ -39,9 +41,10 @@
             <td><?= htmlspecialchars($post['nom'], ENT_QUOTES, 'UTF-8'); ?></td>
             <td><?= htmlspecialchars($post['description'], ENT_QUOTES, 'UTF-8'); ?></td>
             <td class="text-center">
-              <img src="<?= htmlspecialchars($post['image'], ENT_QUOTES, 'UTF-8'); ?>"
+              <img src="upload/<?= htmlspecialchars($post['image']) ?>""
                 alt="Image de l'article" class="img-fluid img-thumbnail" style="max-width: 100px;">
             </td>
+            
             <td class="text-center"><?= htmlspecialchars($post['stock'], ENT_QUOTES, 'UTF-8'); ?></td>
             <td>
               <?= isset($post['categories_nom']) ? htmlspecialchars($post['categories_nom'], ENT_QUOTES, 'UTF-8') : 'Aucune catégorie'; ?>
@@ -49,29 +52,29 @@
 
 
             <td>
-    <?php
-    if (isset($post['pourcentage']) && isset($post['prix'])) {
-        // Afficher le prix barré
-        echo '<span style="text-decoration: line-through;">'
-            . htmlspecialchars($post['prix'], ENT_QUOTES, 'UTF-8')
-            . '</span><br>';
+              <?php
+              if (isset($post['pourcentage']) && isset($post['prix'])) {
+                // Afficher le prix barré
+                echo '<span style="text-decoration: line-through;">'
+                  . htmlspecialchars($post['prix'], ENT_QUOTES, 'UTF-8')
+                  . '</span><br>';
 
-        // Afficher le texte "en promotion" suivi du prix après réduction
-        if ($post['pourcentage'] != 0) {
-            echo "En promotion : "
-                . htmlspecialchars($post['prix'] * (1 - $post['pourcentage'] / 100), ENT_QUOTES, 'UTF-8');
-        } else {
-            echo "Erreur : le pourcentage ne peut pas être 0.";
-        }
-    } elseif (isset($post['prix'])) {
-        // Afficher uniquement le prix si le pourcentage n'existe pas
-        echo htmlspecialchars($post['prix'], ENT_QUOTES, 'UTF-8');
-    } else {
-        // Si rien n'est défini, afficher un message d'erreur
-        echo 'Erreur : pas de prix.';
-    }
-    ?>
-</td>
+                // Afficher le texte "en promotion" suivi du prix après réduction
+                if ($post['pourcentage'] != 0) {
+                  echo "En promotion : "
+                    . htmlspecialchars($post['prix'] * (1 - $post['pourcentage'] / 100), ENT_QUOTES, 'UTF-8');
+                } else {
+                  echo "Erreur : le pourcentage ne peut pas être 0.";
+                }
+              } elseif (isset($post['prix'])) {
+                // Afficher uniquement le prix si le pourcentage n'existe pas
+                echo htmlspecialchars($post['prix'], ENT_QUOTES, 'UTF-8');
+              } else {
+                // Si rien n'est défini, afficher un message d'erreur
+                echo 'Erreur : pas de prix.';
+              }
+              ?>
+            </td>
 
 
 

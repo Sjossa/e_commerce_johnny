@@ -1,4 +1,5 @@
 <?php
+
 require 'Model/article.php';
 
 // Initialisation des variables
@@ -38,13 +39,30 @@ if ($id > 0) {
     // Gestion de la mise à jour de l'article
     elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Sécurisation et récupération des données
+      $uploadDir = 'upload/';
       $nom = htmlspecialchars(trim($_POST['nom'] ?? ''), ENT_QUOTES);
       $description = htmlspecialchars(trim($_POST['description'] ?? ''), ENT_QUOTES);
       $prix = floatval($_POST['prix'] ?? 0);
       $stock = intval($_POST['stock'] ?? 0);
       $categorie = intval($_POST['id_categorie'] ?? 0);
-      $image = htmlspecialchars($_POST['image'] ?? '', ENT_QUOTES);
       $promotionId = isset($_POST['promotion']) && $_POST['promotion'] !== '' ? (int) $_POST['promotion'] : null;
+
+      if (!empty($_FILES['image']['name'])) {
+        $image = basename($_FILES['image']['name']);
+        $imagePath = $uploadDir . $image;
+
+        $imageType = strtolower(pathinfo($imagePath, PATHINFO_EXTENSION));
+
+        // Validation du type de fichier
+        $allowedTypes = ['webp'];
+        if (!in_array($imageType, $allowedTypes)) {
+          $errorMessage = "Seuls les fichiers JPG, PNG et GIF sont autorisés.";
+        } elseif (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+          $errorMessage = "Erreur lors du téléchargement de l'image.";
+        }
+      } else {
+        $image = $article['image'] ?? ''; // Utilisez le nom du fichier déjà stocké
+      }
 
 
       // Mise à jour de l'article

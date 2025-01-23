@@ -1,5 +1,5 @@
+<?php require "Partial/securite.php"; ?>
 <?php if (!empty($posts)): ?>
-
   <!-- Tableau des utilisateurs -->
   <div class="table-responsive shadow-sm rounded">
     <table class="table table-striped table-bordered table-hover align-middle text-center">

@@ -1,3 +1,4 @@
+<?php require "Partial/securite.php"; ?>
 <form action="" method="post" enctype="multipart/form-data" class="formulaire">
   <div class="container my-5">
     <div class="row justify-content-center">

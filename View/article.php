@@ -1,4 +1,7 @@
 <?php
+require "Partial/securite.php";
+
+// Détermination du titre de la page
 $isCreating = isset($_GET['create']);
 $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
 ?>
@@ -33,7 +36,12 @@ $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
   <form action="" method="post" enctype="multipart/form-data" class="shadow-sm p-5 rounded border">
     <h5 class="text-center mb-4">Détails de l'article</h5>
 
-    <!-- Messages d'erreur -->
+    <div class="mb-4 text-center">
+      <img src="upload/<?= htmlspecialchars($article['image']) ?>" alt="Image de l'article"
+        class="img-fluid d-block mx-auto max-width-200 img-thumbnail">
+    </div>
+
+    <!-- Affichage des messages d'erreur -->
     <?php if (!empty($errorMessage)): ?>
       <div class="alert alert-danger"><?= htmlentities($errorMessage) ?></div>
     <?php endif; ?>
@@ -44,6 +52,13 @@ $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
       <input type="text" name="nom" id="nom" value="<?= htmlentities($article['nom'] ?? '') ?>"
         class="form-control" placeholder="Nom de l'article" required>
     </div>
+
+    <!-- Image -->
+    <div class="mb-4">
+      <label for="image" class="form-label">Sélectionnez une image :</label>
+      <input type="file" name="image" id="image" class="form-control">
+    </div>
+
 
     <!-- Description -->
     <div class="mb-4">
@@ -64,9 +79,9 @@ $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
     <div class="mb-4">
       <label for="promotion" class="form-label">Promotion (%)</label>
       <select name="promotion" id="promotion" class="form-select">
-
-        <option value="" <?= isset($article['id_promotion']) && $article['id_promotion'] == 0 ? 'selected' : '' ?>>pas de promotion</option>
-
+        <option value="" <?= isset($article['id_promotion']) && $article['id_promotion'] == 0 ? 'selected' : '' ?>>
+          Pas de promotion
+        </option>
         <?php foreach ($promotion as $promo): ?>
           <option value="<?= $promo['id_promotion'] ?>" <?= isset($article['id_promotion']) && $promo['id_promotion'] == $article['id_promotion'] ? 'selected' : '' ?>>
             <?= htmlentities($promo['discount_percentage']) ?>%
@@ -74,8 +89,6 @@ $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
         <?php endforeach; ?>
       </select>
     </div>
-
-
 
     <!-- Stock -->
     <div class="mb-4">
@@ -102,3 +115,9 @@ $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
     <button type="submit" class="btn btn-primary w-100">Enregistrer l’article</button>
   </form>
 </div>
+
+<style>
+  .max-width-200 {
+    max-width: 200px;
+  }
+</style>

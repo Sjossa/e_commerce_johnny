@@ -5,7 +5,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 require_once 'config/BDD.php';
-require_once 'Partial/nav.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -24,10 +24,11 @@ require_once 'Partial/nav.php';
 </head>
 
 <body data-bs-theme="dark">
+  <?php require_once 'Partial/nav.php'; ?>
   <div class="container my-4">
     <?php
     if (isset($_GET["component"])) {
-      $componentName = htmlspecialchars($_GET["component"]); // Protéger contre les injections
+      $componentName = htmlspecialchars($_GET["component"]);
       if (file_exists("Controller/$componentName.php")) {
         require "Controller/$componentName.php";
       } else {
@@ -39,7 +40,7 @@ require_once 'Partial/nav.php';
     ?>
   </div>
 
-  <!-- Footer -->
+
   <footer class="bg-dark text-white py-3 mt-auto">
     <div class="container text-center">
       <small>© 2025 MonSite. Tous droits réservés.</small>
