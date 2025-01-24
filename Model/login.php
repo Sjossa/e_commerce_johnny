@@ -5,28 +5,50 @@ function email_verify($email, $validEmail)
   return $email === $validEmail;
 }
 
+/**
+ * Vérifie les informations d'identification de l'utilisateur.
+ *
+ * @param PDO $pdo L'objet PDO pour la connexion à la base de données.
+ * @param string $email L'email de l'utilisateur.
+ * @param string $password Le mot de passe de l'utilisateur.
+ * @return array|false Les informations de l'utilisateur si l'authentification réussit, false sinon.
+ */
 function verifUser(PDO $pdo, $email, $password)
 {
-  $query = "SELECT * FROM users WHERE email = :email ";
-  $stmt = $pdo->prepare($query);
-  $stmt->bindParam(':email', $email);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  // Définir la requête SQL pour récupérer l'utilisateur par email
+  $query = "SELECT * FROM users WHERE email = :email";
 
+  try {
+    // Préparer la requête
+    $stmt = $pdo->prepare($query);
 
-  if ($result) {
-    $validPassword = $result['password'];
+    // Lier le paramètre email
+    $stmt->bindParam(':email', $email);
 
-    if (password_verify($password, $validPassword)) {
+    // Exécuter la requête
+    $stmt->execute();
 
-      return $result;
+    // Récupérer le résultat
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Vérifier si un utilisateur a été trouvé
+    if ($result) {
+      $validPassword = $result['password'];
+
+      // Vérifier le mot de passe
+      if (password_verify($password, $validPassword)) {
+        return $result;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
-  } else {
+  } catch (PDOException $e) {
+    // En cas d'erreur, loguer l'erreur et retourner false
+    error_log("Erreur lors de la vérification de l'utilisateur : " . $e->getMessage());
     return false;
   }
 }
-
 ?>
 

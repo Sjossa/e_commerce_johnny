@@ -56,9 +56,9 @@ if ($id > 0) {
         // Validation du type de fichier
         $allowedTypes = ['webp'];
         if (!in_array($imageType, $allowedTypes)) {
-          $errorMessage = "Seuls les fichiers JPG, PNG et GIF sont autorisés.";
+          $_SESSION['error_message'] = "webp.";
         } elseif (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
-          $errorMessage = "Erreur lors du téléchargement de l'image.";
+          $_SESSION['error_message'] = "Erreur lors du téléchargement de l'image.";
         }
       } else {
         $image = $article['image'] ?? ''; // Utilisez le nom du fichier déjà stocké
@@ -70,7 +70,7 @@ if ($id > 0) {
         header("Location: index.php?component=article&id_article=$id");
         exit();
       } else {
-        $errorMessage = "Erreur lors de la mise à jour de l'article.";
+        $_SESSION['error_message'] = "Erreur lors de la mise à jour de l'article.";
       }
     }
   } else {
@@ -91,7 +91,7 @@ if ($create) {
       header("Location: index.php?component=article&id_article");
       exit();
     } else {
-      $errorMessage = "Impossible d’ajouter la promotion.";
+      $_SESSION['error_message'] = "Impossible d’ajouter la promotion.";
     }
   }
 
@@ -111,7 +111,7 @@ if ($create) {
       header("Location: index.php?component=articles");
       exit();
     } else {
-      $errorMessage = "Erreur lors de la création de l'article.";
+      $_SESSION['error_message'] = "Erreur lors de la création de l'article.";
     }
   }
 }

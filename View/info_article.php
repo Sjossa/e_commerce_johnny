@@ -28,6 +28,7 @@
     font-weight: bold;
     color: #28a745;
   }
+  
 </style>
 
 <body>
@@ -39,7 +40,33 @@
       </div>
       <div class="col-md-6 product-details">
         <h1><?= htmlentities($article['nom'] ?? '') ?></h1>
-        <p class="price"> <?= htmlentities($article['prix'] ?? '') ?>€</p>
+<?php
+if (isset($article['prix'])) {
+  // Vérifier si le pourcentage existe et est valide
+  if (isset($article['pourcentage']) && $article['pourcentage'] > 0) {
+    // Affichage du prix barré
+    echo '<p class="price" style="text-decoration: line-through;">'
+      . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8')
+      . ' €</p>';
+
+    // Calcul et affichage du prix réduit
+    $prixReduit = $article['prix'] * (1 - $article['pourcentage'] / 100);
+    echo
+       htmlspecialchars($prixReduit, ENT_QUOTES, 'UTF-8')
+      . ' €</p>';
+  } else {
+    echo '<p class="price">'
+      . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8')
+      . ' €</p>';
+  }
+} else {
+  // Si le prix n'est pas défini, afficher un message d'erreur
+  echo '<p class="error">Erreur : aucun prix spécifié.</p>';
+}
+?>
+
+
+
 
 
         <!-- Description -->

@@ -32,7 +32,7 @@ if ($id > 0) {
         header("Location: index.php?component=users");
         exit();
       } else {
-        $error = "Le rôle sélectionné est invalide.";
+        $_SESSION['error_message'] = "Le rôle sélectionné est invalide.";
       }
     }
   } else {

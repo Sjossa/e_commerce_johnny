@@ -1,10 +1,9 @@
 <?php
 function listeUsers(PDO $pdo, $page, $tri = '')
 {
-  $perPage = 5; // Nombre d'utilisateurs par page
+  $perPage = 5;
   $offset = ($page - 1) * $perPage;
 
-  // Colonnes autorisées pour le tri
   $colonnes = ['username', 'email', 'role'];
   $orderBy = '';
 
@@ -25,8 +24,8 @@ function listeUsers(PDO $pdo, $page, $tri = '')
 
   try {
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':perpage', $perPage, PDO::PARAM_INT);
-    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':perpage', $perPage, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
 
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -40,31 +39,37 @@ function listeUsers(PDO $pdo, $page, $tri = '')
     ];
 
   } catch (PDOException $e) {
-    echo "Erreur SQL : " . $e->getMessage();
+    error_log("Erreur SQL : " . $e->getMessage());
     return [];
   }
 }
 
-
-function DeleteUsers(PDO $pdo, $usersId)
+function deleteUsers(PDO $pdo, $usersId)
 {
-  if ($usersId) {
+  if ($usersId && is_int($usersId) && $usersId > 0) {
     $checkQuery = "SELECT COUNT(*) FROM users WHERE id = :id";
-    $stmt = $pdo->prepare($checkQuery);
-    $stmt->bindValue(':id', $usersId, PDO::PARAM_INT);
-    $stmt->execute();
-    $usersExists = $stmt->fetchColumn();
-
-    if ($usersExists) {
-      $query = "DELETE FROM users WHERE id = :id";
-      $stmt = $pdo->prepare($query);
+    try {
+      $stmt = $pdo->prepare($checkQuery);
       $stmt->bindValue(':id', $usersId, PDO::PARAM_INT);
       $stmt->execute();
-    } else {
-      echo "Erreur : L'utilisateur avec l'ID $usersId n'existe pas.";
-      return;
+      $usersExists = $stmt->fetchColumn();
+
+      if ($usersExists) {
+        $query = "DELETE FROM users WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindValue(':id', $usersId, PDO::PARAM_INT);
+        $stmt->execute();
+        return true; // Indiquer que la suppression a réussi
+      } else {
+        error_log("Erreur : L'utilisateur avec l'ID $usersId n'existe pas.");
+        return false; // Indiquer que l'utilisateur n'existe pas
+      }
+    } catch (PDOException $e) {
+      error_log("Erreur SQL : " . $e->getMessage());
+      return false; // Indiquer qu'une erreur s'est produite
     }
   }
+  return false; // Indiquer que l'ID de l'utilisateur est invalide
 }
 ?>
 

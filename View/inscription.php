@@ -1,3 +1,4 @@
+
 <form method="post" action="index.php?component=inscription" onsubmit="return verification();">
   <div class="mb-3">
     <label for="username" class="form-label">Entrez votre nom</label>

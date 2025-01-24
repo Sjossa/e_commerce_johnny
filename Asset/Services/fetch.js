@@ -1,15 +1,8 @@
-let isLoading = false;
+export const loadContentFromUrl = (url, principal, callback) => {
 
 
-export const loadContentFromUrl = (url, container, callback) => {
-  if (isLoading) {
-    console.warn("Une requête est déjà en cours, veuillez patienter.");
-    return;
-  }
-
-  isLoading = true;
   console.log("Requête démarrée :", url);
-  container.classList.add("loading");
+  principal.classList.add("loading");
 
   fetch(url)
     .then((response) => {
@@ -19,20 +12,17 @@ export const loadContentFromUrl = (url, container, callback) => {
       return response.text();
     })
     .then((html) => {
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = html;
-
-      const newContent = tempDiv.querySelector(".container");
+      // On remplace directement le contenu de `principal` avec l'élément cible extrait
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const newContent = doc.querySelector("#principal");
 
       if (!newContent) {
-        throw new Error("Container introuvable dans la réponse HTML");
+        throw new Error("Élément #principal introuvable dans la réponse HTML");
       }
 
-      container.innerHTML = "";
-      container.appendChild(newContent);
+      principal.innerHTML = newContent.innerHTML; // Remplace uniquement le contenu
       console.log("Contenu chargé :", url);
-
-
 
       if (callback) callback();
     })
@@ -43,8 +33,8 @@ export const loadContentFromUrl = (url, container, callback) => {
       );
     })
     .finally(() => {
-      isLoading = false;
+     
       console.log("Requête terminée :", url);
-      container.classList.remove("loading");
+      principal.classList.remove("loading");
     });
 };

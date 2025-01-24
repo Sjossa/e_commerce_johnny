@@ -16,7 +16,7 @@
 
             <!-- Bouton Détails -->
             <div class="d-flex justify-content-between align-items-center">
-              <a href="#" onclick="toogleUser(<?php echo $article['id_article']; ?>)"
+              <a href="index.php?component=info_article&id_article=<?php echo $article['id_article']; ?>"
                 class="btn btn-outline-primary btn-sm w-100" aria-label="Voir les détails de l'article">
                 Détails
               </a>

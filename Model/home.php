@@ -1,16 +1,18 @@
 <?php
 function getArticles(PDO $pdo)
 {
+
   $query = "SELECT * FROM articles";
-  $stmt = $pdo->prepare($query);
 
   try {
+
+    $stmt = $pdo->prepare($query);
+
     $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $e) {
-
-    return []; 
+    error_log("Erreur lors de la récupération des articles : " . $e->getMessage());
+    return [];
   }
-
-  return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
