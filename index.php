@@ -14,30 +14,27 @@ require_once 'config/BDD.php';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Projet PHP avec Bootstrap</title>
-<link rel="stylesheet" href="Asset/Css/bootstrap/bootstrap.min.css">
-
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="Asset/Css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body data-bs-theme="dark">
-  <?php require_once 'Partial/nav.php'; ?>
-  <div class="container my-4" id="principal">
+  <?php if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message'])): ?>
     <?php require "Partial/errors.php"; ?>
+  <?php endif; ?>
+
+  <?php require_once 'Partial/nav.php'; ?>
+
+  <div class="container my-4" id="principal">
     <?php
-    if (isset($_GET["component"])) {
-      $componentName = htmlspecialchars($_GET["component"]);
-      if (file_exists("Controller/$componentName.php")) {
+    $componentName = $_GET["component"] ?? null;
+    if ($componentName && file_exists("Controller/$componentName.php")) {
         require "Controller/$componentName.php";
-      } else {
-        echo '<div class="alert alert-danger" role="alert">Erreur 404 : Composant non trouvé.</div>';
-      }
     } else {
-      require "Controller/home.php";
+        require "Controller/home.php";
     }
     ?>
   </div>
-
 
   <footer class="bg-dark text-white py-3 mt-auto">
     <div class="container text-center">
@@ -46,8 +43,7 @@ require_once 'config/BDD.php';
   </footer>
 
   <script type="module" src="Asset/Shareds/bootstrap/bootstrap.bundle.min.js"></script>
-  <script type="module" src="./Asset/Shareds/click.js"></script>
-
+  <script type="module" src="Asset/Shareds/click.js"></script>
 </body>
 
 </html>

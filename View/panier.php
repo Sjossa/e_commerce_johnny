@@ -1,105 +1,106 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Panier - Boutique</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-    rel="stylesheet">
-  <style>
-    .product-img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-    }
-
-    .btn-remove {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    .btn-remove:hover {
-      background-color: #c82333;
-    }
-
-    .total-section {
-      border-top: 1px solid #dee2e6;
-      margin-top: 30px;
-      padding-top: 15px;
-    }
-
-    .cart-item-row {
-      align-items: center;
-    }
-  </style>
-</head>
-
-<body>
+<form action="index.php?component=panier" method="POST">
   <div class="container mt-5">
-    <h2 class="mb-4 text-center">Votre Panier</h2>
+    <h1 class="text-center text-primary">Votre Panier</h1>
 
-    <!-- Table Panier -->
-    <div class="row">
-      <div class="col-12">
-        <table class="table table-hover">
-          <thead>
+    <?php if (!empty($errorMessage)): ?>
+      <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        <?= htmlspecialchars($errorMessage) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <?php endif; ?>
+
+    <?php if (!empty($cartItems)): ?>
+      <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Images</th>
+            <th>Article</th>
+            <th>Quantité</th>
+            <th>Prix Unitaire</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $totalPanier = 0;
+          foreach ($cartItems as $item):
+            // Calcul du prix unitaire après promotion (si applicable)
+            $prixUnitaire = isset($item['pourcentage']) && $item['pourcentage'] > 0
+              ? $item['prix'] * (1 - $item['pourcentage'] / 100)
+              : $item['prix'];
+
+            $totalArticle = $prixUnitaire * $item['quantity'];
+            $totalPanier += $totalArticle;
+            ?>
             <tr>
-              <th scope="col">Image</th>
-              <th scope="col">Produit</th>
-              <th scope="col">Quantité</th>
-              <th scope="col">Prix Unitaire</th>
-              <th scope="col">Total</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Produit A -->
-            <tr class="cart-item-row">
-              <td><img src="https://via.placeholder.com/80" alt="Produit A" class="product-img">
-              </td>
-              <td>Produit A</td>
               <td>
-                <input type="number" class="form-control" value="1" min="1">
+                <img src="upload/<?= htmlspecialchars($item['image']) ?>" alt="Image de l'article"
+                  class="img-fluid rounded mx-auto d-block" style="max-width: 120px;">
               </td>
-              <td>15 €</td>
-              <td>15 €</td>
-              <td><button class="btn btn-remove btn-sm">Supprimer</button></td>
-            </tr>
-            <!-- Produit B -->
-            <tr class="cart-item-row">
-              <td><img src="https://via.placeholder.com/80" alt="Produit B" class="product-img">
-              </td>
-              <td>Produit B</td>
+              <td><?= htmlspecialchars($item['nom']) ?></td>
               <td>
-                <input type="number" class="form-control" value="2" min="1">
+                <input type="number" name="quantity[<?= $item['id_article'] ?>]"
+                  value="<?= $item['quantity'] ?>" min="1" max="<?= $item['stock'] ?>"
+                  class="form-control w-50 mx-auto">
               </td>
-              <td>25 €</td>
-              <td>50 €</td>
-              <td><button class="btn btn-remove btn-sm">Supprimer</button></td>
+              <td>
+                <?php if (isset($item['pourcentage']) && $item['pourcentage'] > 0): ?>
+                  <del><?= number_format($item['prix'], 2) ?> €</del>
+                  <span class="text-success">
+                    <?= number_format($prixUnitaire, 2) ?> €
+                  </span>
+                <?php else: ?>
+                  <?= number_format($item['prix'], 2) ?> €
+                <?php endif; ?>
+              </td>
+              <td><?= number_format($totalArticle, 2) ?> €</td>
+              <td class="text-center">
+                <button type="submit" name="update[<?= $item['id_article'] ?>]"
+                  class="btn btn-warning btn-sm">
+                  <i class="bi bi-pencil-square"></i> Mettre à jour
+                </button>
+                <button type="submit" name="remove[<?= $item['id_article'] ?>]"
+                  class="btn btn-danger btn-sm"
+                  onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                  <i class="bi bi-trash"></i> Supprimer
+                </button>
+              </td>
             </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
 
-    <!-- Section Total -->
-    <div class="total-section">
-      <div class="row">
-        <div class="col-12 d-flex justify-content-between">
-          <h4>Total : </h4>
-          <h4>65 €</h4>
-        </div>
+      <div class="text-center">
+        <h3>Total du panier : <strong><?= number_format($totalPanier, 2) ?> €</strong></h3>
+        <button type="submit" name="checkout" class="btn btn-success btn-lg mt-3">Passer à la
+          commande</button>
       </div>
-      <div class="d-flex justify-content-between mt-3">
-        <a href="index.html" class="btn btn-outline-secondary">Retour à la boutique</a>
-        <a href="checkout.html" class="btn btn-primary">Passer à la caisse</a>
+    <?php else: ?>
+      <div class="alert alert-info text-center">
+        Votre panier est vide. <a href="index.php" class="btn btn-link link">Retournez à la
+          boutique</a>
       </div>
-    </div>
+    <?php endif; ?>
   </div>
+</form>
 
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+<!-- Validation JavaScript pour les quantités -->
+<script>
+  document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('change', function () {
+      const min = parseInt(input.getAttribute('min'));
+      const max = parseInt(input.getAttribute('max'));
+      let value = parseInt(input.value);
 
-</html>
+      // Valider la valeur entrée
+      if (value < min) {
+        input.value = min;
+        ;
+      } else if (value > max) {
+        input.value = max;
+
+      }
+    });
+  });
+</script>

@@ -8,7 +8,10 @@
             <h5 class="card-title text-truncate" style="max-width: 100%;">
               <?php echo htmlspecialchars($article['nom']); ?>
             </h5>
-
+<div class="col-md-3">
+        <img src="upload/<?= htmlspecialchars($article['image']) ?>" alt="Image de l'article"
+          class="img-fluid d-block mx-auto max-width-200 img-thumbnail">
+      </div>
             <!-- Description de l'article -->
             <p class="card-text text-muted" style="max-height: 100px; overflow: hidden;">
               <?php echo htmlspecialchars($article['description']); ?>

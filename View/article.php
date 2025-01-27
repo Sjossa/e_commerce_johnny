@@ -1,24 +1,23 @@
 <?php
 require "Partial/securite.php";
 
-// Détermination du titre de la page
 $isCreating = isset($_GET['create']);
 $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
 ?>
 
 <div class="container my-5">
-  <!-- Titre -->
+
   <h1 class="text-center mb-5"><?= htmlentities($title) ?></h1>
 
-  <!-- Lien de retour -->
+
   <div class="mb-4 text-start">
     <a href="index.php?component=articles" class="link text-decoration-none text-primary">
       <i class="bi bi-arrow-left-square-fill me-1"></i>Retour
     </a>
   </div>
 
-  <!-- Ajout de promotion -->
-  <?php if (!$create): ?>
+
+  <?php if (!$isCreating): ?>
     <form
       action="index.php?component=article&id_article=<?= htmlspecialchars($article['id_article']) ?>&new_promotion"
       method="post" class="mb-5 shadow-sm p-4 rounded border">
@@ -36,30 +35,24 @@ $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
   <form action="" method="post" enctype="multipart/form-data" class="shadow-sm p-5 rounded border">
     <h5 class="text-center mb-4">Détails de l'article</h5>
 
+     <?php if (!$isCreating): ?>
     <div class="mb-4 text-center">
-      <img src="upload/<?= htmlspecialchars($article['image']) ?>" alt="Image de l'article"
-        class="img-fluid d-block mx-auto max-width-200 img-thumbnail">
+      <img
+        src="upload/<?= isset($article['image']) && $article['image'] ? htmlspecialchars($article['image']) : 'default.jpg' ?>"
+        alt="<?= htmlentities($article['description'] ?? '') ?>" class="img-fluid d-block mx-auto max-width-200 img-thumbnail">
     </div>
-
-    <!-- Affichage des messages d'erreur -->
-    <?php if (!empty($errorMessage)): ?>
-      <div class="alert alert-danger"><?= htmlentities($errorMessage) ?></div>
-    <?php endif; ?>
-
+<?php endif; ?>
     <!-- Nom -->
     <div class="mb-4">
       <label for="nom" class="form-label">Nom</label>
       <input type="text" name="nom" id="nom" value="<?= htmlentities($article['nom'] ?? '') ?>"
         class="form-control" placeholder="Nom de l'article" required>
     </div>
-
-    <!-- Image -->
+<!-- Image -->
     <div class="mb-4">
       <label for="image" class="form-label">Sélectionnez une image :</label>
       <input type="file" name="image" id="image" class="form-control">
     </div>
-
-
     <!-- Description -->
     <div class="mb-4">
       <label for="description" class="form-label">Description</label>

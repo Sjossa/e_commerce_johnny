@@ -1,126 +1,64 @@
-<style>
-  .product-img {
-    max-width: 100%;
-    border-radius: 5px;
-  }
-
-  .product-details {
-    padding-top: 20px;
-  }
-
-  .product-description {
-    font-size: 1.1rem;
-    color: #555;
-  }
-
-  .btn-primary-custom {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-
-  .btn-primary-custom:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-  }
-
-  .price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #28a745;
-  }
-  
-</style>
-
-<body>
+<form action="" method="POST">
   <div class="container mt-5">
     <div class="row">
+      <!-- Image de l'article -->
       <div class="col-md-3">
         <img src="upload/<?= htmlspecialchars($article['image']) ?>" alt="Image de l'article"
-          class="img-fluid d-block mx-auto max-width-200 img-thumbnail">
+          class="img-fluid d-block mx-auto img-thumbnail" style="max-width: 200px;">
       </div>
+
+      <!-- Détails du produit -->
       <div class="col-md-6 product-details">
         <h1><?= htmlentities($article['nom'] ?? '') ?></h1>
-<?php
-if (isset($article['prix'])) {
-  // Vérifier si le pourcentage existe et est valide
-  if (isset($article['pourcentage']) && $article['pourcentage'] > 0) {
-    // Affichage du prix barré
-    echo '<p class="price" style="text-decoration: line-through;">'
-      . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8')
-      . ' €</p>';
 
-    // Calcul et affichage du prix réduit
-    $prixReduit = $article['prix'] * (1 - $article['pourcentage'] / 100);
-    echo
-       htmlspecialchars($prixReduit, ENT_QUOTES, 'UTF-8')
-      . ' €</p>';
-  } else {
-    echo '<p class="price">'
-      . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8')
-      . ' €</p>';
-  }
-} else {
-  // Si le prix n'est pas défini, afficher un message d'erreur
-  echo '<p class="error">Erreur : aucun prix spécifié.</p>';
-}
-?>
+        <?php if (isset($article['prix'])): ?>
+          <div class="price">
+            <?php
+            if (isset($article['pourcentage']) && $article['pourcentage'] > 0) {
+              echo '<p class="old-price" style="text-decoration: line-through;">'
+                . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8')
+                . ' €</p>';
+              $prixReduit = $article['prix'] * (1 - $article['pourcentage'] / 100);
+              echo '<p class="new-price">' . htmlspecialchars($prixReduit, ENT_QUOTES, 'UTF-8') . ' €</p>';
+            } else {
+              echo '<p class="current-price">' . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8') . ' €</p>';
+            }
+            ?>
+          </div>
+        <?php else: ?>
+          <p class="error">Erreur : aucun prix spécifié.</p>
+        <?php endif; ?>
 
-
-
-
-
-        <!-- Description -->
+        <!-- Description du produit -->
         <p class="product-description">
           <?= htmlentities($article['description'] ?? '') ?>
         </p>
 
+        <!-- Quantité -->
         <div class="d-flex align-items-center mt-4">
-          <h5>Quantité:</h5>
-          <input type="number" class="form-control w-25 ms-3" value="1" min="1"
-            max="<?= htmlspecialchars($article['stock']) ?>">
+          <label for="quantity" class="h5 mb-0">Quantité:</label>
+          <input type="number" class="form-control w-25 ms-3" id="quantity" name="quantity"
+            value="1" min="1" max="<?= htmlspecialchars($article['stock']) ?>" required>
         </div>
 
+        <!-- Bouton Ajouter au panier -->
         <div class="d-flex mt-4">
-          <button class="btn btn-primary-custom me-3" id="add-to-cart-btn">Ajouter au
-            panier</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section supplémentaire -->
-    <div class="mt-5">
-      <h3>Produits similaires</h3>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card">
-            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Produit similaire">
-            <div class="card-body">
-              <h5 class="card-title">Produit B</h5>
-              <p class="card-text">15,99 €</p>
-              <a href="#" class="btn btn-outline-secondary">Voir</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Produit similaire">
-            <div class="card-body">
-              <h5 class="card-title">Produit C</h5>
-              <p class="card-text">19,99 €</p>
-              <a href="#" class="btn btn-outline-secondary">Voir</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Produit similaire">
-            <div class="card-body">
-              <h5 class="card-title">Produit D</h5>
-              <p class="card-text">24,99 €</p>
-              <a href="#" class="btn btn-outline-secondary">Voir</a>
-            </div>
-          </div>
+          <button type="submit" class="btn btn-primary-custom me-3" id="add-to-cart-btn"
+            name="add_to_cart" value="<?= htmlspecialchars($article['id_article']) ?>">
+            Ajouter au panier
+          </button>
         </div>
       </div>
     </div>
   </div>
+</form>
+
+<script>
+  document.getElementById("add-to-cart-btn").addEventListener("click", function (event) {
+    const quantity = document.getElementById("quantity").value;
+    if (quantity <= 0) {
+      alert("La quantité doit être supérieure à zéro.");
+      event.preventDefault();
+    }
+  });
+</script>

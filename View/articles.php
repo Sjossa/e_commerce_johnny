@@ -1,7 +1,6 @@
 <?php require "Partial/securite.php";
 if (!empty($posts)): ?>
 
-<?php var_dump($page);?>
 
   <!-- Section des actions -->
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -179,6 +178,12 @@ if (!empty($posts)): ?>
 
 <?php else: ?>
   <p class="text-center text-muted">Aucun article trouvé.</p>
+  <div class="text-center mt-3">
+    <a href="index.php?component=article&create" class="btn btn-success">
+      Ajouter un article
+    </a>
+  </div>
+
 <?php endif; ?>
 <script type="module" src="Asset/Services/fetch.js"></script>
 

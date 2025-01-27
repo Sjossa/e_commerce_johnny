@@ -2,7 +2,7 @@
 function getArticles(PDO $pdo)
 {
 
-  $query = "SELECT * FROM articles";
+  $query = "SELECT * FROM articles limit 6";
 
   try {
 

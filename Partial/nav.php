@@ -60,14 +60,7 @@
       <!-- Barre de recherche -->
       <form class="d-flex ms-3 "  id="form-article" role="search">
         <div class="input-group">
-          <!-- Menu déroulant pour les catégories -->
-          <select class="form-select rounded-pill shadow-sm" id="search-category"
-            aria-label="Choisir une catégorie">
-            <option value="all" selected>Tout</option>
-            <option value="articles">Articles</option>
-            <option value="products">Produits</option>
-            <option value="services">Services</option>
-          </select>
+          
 
           <!-- Champ de recherche -->
           <input type="search" class="form-control rounded-pill shadow-sm Search-articles ms-2"

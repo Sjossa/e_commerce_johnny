@@ -33,6 +33,7 @@ if (!isset($article) || !isset($role)) {
                 </option>
               <?php endforeach; ?>
             </select>
+            <div class="invalid-feedback">Veuillez sélectionner un rôle.</div> <!-- Validation message -->
           </div>
 
           <!-- Bouton Enregistrer -->
@@ -42,3 +43,24 @@ if (!isset($article) || !isset($role)) {
     </div>
   </div>
 </form>
+
+<!-- Validation en JavaScript -->
+<script>
+  // Validation côté client (facultatif, selon tes besoins)
+  document.querySelector("form").addEventListener("submit", function(event) {
+    let valid = true;
+
+    // Vérification du champ 'role'
+    const role = document.getElementById("role");
+    if (!role.value) {
+      role.classList.add("is-invalid");
+      valid = false;
+    } else {
+      role.classList.remove("is-invalid");
+    }
+
+    if (!valid) {
+      event.preventDefault(); 
+    }
+  });
+</script>

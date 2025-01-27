@@ -130,39 +130,23 @@ function DeleteArticles(PDO $pdo, $articleId)
 // Fonction pour mettre à jour une catégorie avec une promotion
 function UpCategorie(PDO $pdo, $categorie)
 {
-  $promotion = isset($_POST['promotion_creation']) && $_POST['promotion_creation'] !== ""
-    ? $_POST['promotion_creation'] // Si une promotion manuelle est définie
-    : $_POST['promotion']; // Sinon, prendre la promotion existante
-
-  if ($promotion > 0) {
-    // Si le pourcentage de promotion est spécifié, vérifier s'il existe déjà
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM promotions WHERE discount_percentage = :promotion");
-    $stmt->bindParam(':promotion', $promotion);
-    $stmt->execute();
-    $count = $stmt->fetchColumn();
-
-    if ($count == 0) {
-      // Si la promotion n'existe pas, insérer une nouvelle promotion
-      $queryInsert = "INSERT INTO promotions (discount_percentage) VALUES (:promotion)";
-      $stmtInsert = $pdo->prepare($queryInsert);
-      $stmtInsert->bindParam(':promotion', $promotion);
-      $stmtInsert->execute();
-
-      // Récupérer l'ID de la nouvelle promotion
-      $newPromotionId = $pdo->lastInsertId();
-    } else {
-      // Si la promotion existe déjà, récupérer son ID
-      $querySelect = "SELECT id_promotion FROM promotions WHERE discount_percentage = :promotion";
-      $stmtSelect = $pdo->prepare($querySelect);
-      $stmtSelect->bindParam(':promotion', $promotion);
-      $stmtSelect->execute();
-      $newPromotionId = $stmtSelect->fetchColumn();
+  if (!empty($categorie)) {
+    try {
+      // Insérer une nouvelle catégorie
+      $query = "INSERT INTO categories (nom) VALUES (:categorie)";
+      $stmt = $pdo->prepare($query);
+      $stmt->bindParam(':categorie', $categorie, PDO::PARAM_STR);
+      $stmt->execute();
+      echo "Catégorie ajoutée avec succès !";
+    } catch (PDOException $e) {
+      // Gestion d'erreur
+      echo "Erreur lors de l'ajout de la catégorie : " . $e->getMessage();
     }
   } else {
-    // Si aucune promotion définie, mettre à NULL ou 0
-    $newPromotionId = null;
+    echo "Erreur : le nom de la catégorie ne peut pas être vide.";
   }
 }
+
 
 // Fonction pour récupérer les catégories disponibles
 function RecupCategorie(PDO $pdo): array

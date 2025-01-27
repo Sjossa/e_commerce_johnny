@@ -1,6 +1,4 @@
 export const loadContentFromUrl = (url, principal, callback) => {
-
-
   console.log("Requête démarrée :", url);
   principal.classList.add("loading");
 
@@ -12,7 +10,6 @@ export const loadContentFromUrl = (url, principal, callback) => {
       return response.text();
     })
     .then((html) => {
-      // On remplace directement le contenu de `principal` avec l'élément cible extrait
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
       const newContent = doc.querySelector("#principal");
@@ -21,8 +18,27 @@ export const loadContentFromUrl = (url, principal, callback) => {
         throw new Error("Élément #principal introuvable dans la réponse HTML");
       }
 
-      principal.innerHTML = newContent.innerHTML; // Remplace uniquement le contenu
+      // Remplace uniquement le contenu de `principal`
+      principal.innerHTML = newContent.innerHTML;
       console.log("Contenu chargé :", url);
+
+      // Réinitialiser/recharger les scripts
+      const scriptElements = newContent.querySelectorAll("script");
+      scriptElements.forEach((script) => {
+        const newScript = document.createElement("script");
+        newScript.type = script.type || "text/javascript";
+
+        if (script.src) {
+          // Si le script a un attribut src, on le recharge à partir de cette URL
+          newScript.src = script.src;
+        } else {
+          // Sinon, on copie le contenu inline du script
+          newScript.textContent = script.textContent;
+        }
+
+        // Ajoute le nouveau script au DOM
+        document.body.appendChild(newScript).parentNode.removeChild(newScript);
+      });
 
       if (callback) callback();
     })
@@ -33,7 +49,6 @@ export const loadContentFromUrl = (url, principal, callback) => {
       );
     })
     .finally(() => {
-     
       console.log("Requête terminée :", url);
       principal.classList.remove("loading");
     });

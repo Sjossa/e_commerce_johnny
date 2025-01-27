@@ -21,7 +21,7 @@
         <?php foreach ($posts as $post): ?>
           <tr>
             <?php foreach (['username', 'email', 'role'] as $key): ?>
-              <td><?= htmlspecialchars($post[$key], ENT_QUOTES, 'UTF-8'); ?></td>
+              <td class="text-nowrap"><?= htmlspecialchars($post[$key], ENT_QUOTES, 'UTF-8'); ?></td>
             <?php endforeach; ?>
             <td>
               <a href="index.php?component=user&id=<?= htmlspecialchars($post['id'], ENT_QUOTES, 'UTF-8'); ?>"
@@ -46,7 +46,7 @@
         <li class="page-item">
           <a href="index.php?component=users&users=<?= htmlspecialchars($page - 1, ENT_QUOTES, 'UTF-8'); ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
             class="page-link">
-            Précédent
+            <i class="bi bi-arrow-left-circle"></i> Précédent
           </a>
         </li>
       <?php endif; ?>
@@ -64,7 +64,7 @@
         <li class="page-item">
           <a href="index.php?component=users&users=<?= htmlspecialchars($page + 1, ENT_QUOTES, 'UTF-8'); ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
             class="page-link">
-            Suivant
+            <i class="bi bi-arrow-right-circle"></i> Suivant
           </a>
         </li>
       <?php endif; ?>

@@ -41,7 +41,7 @@ function validitéUsers($pdo, $id)
 
 function UpdateUsers(PDO $pdo, $id, $username, $email, $role)
 {
-  $query = "UPDATE users SET username = :username, email = :email, role = :role, WHERE id = :id";
+  $query = "UPDATE users SET username = :username, email = :email, role = :role WHERE id = :id";
   $stmt = $pdo->prepare($query);
 
   $stmt->bindParam(':username', $username);
@@ -50,8 +50,3 @@ function UpdateUsers(PDO $pdo, $id, $username, $email, $role)
   $stmt->bindParam(':id', $id, PDO::PARAM_INT);
   $stmt->execute();
 }
-
-
-
-
-

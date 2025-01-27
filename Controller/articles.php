@@ -38,7 +38,7 @@ if ($upCategorie) {
   exit;
 }
 
-// Récupérer les articles avec ou sans filtre
+
 if ($filtre_categorie) {
 
 
