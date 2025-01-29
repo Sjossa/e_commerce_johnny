@@ -7,9 +7,6 @@ if (!empty($posts)): ?>
     <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center">
       <i class="bi bi-plus-circle me-2"></i> Ajouter un article
     </a>
-    <button id="bbbb" class="btn btn-primary d-flex align-items-center">
-      <i class="bi bi-folder-plus me-2"></i> Ajouter une catégorie
-    </button>
   </div>
 
   <div class="mb-4">

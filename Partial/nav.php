@@ -1,7 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg  shadow-sm" style="background-color: #131921;">
   <div class="container-fluid">
     <!-- Logo / Lien Home -->
-    <a href="index.php?component=home" class="navbar-brand fw-bold text-primary link">Home</a>
+   <a href="index.php?component=home" class="navbar-brand fw-bold text-primary link"><img src="Asset/image/logo.png" class="img-fluid" style="max-width: 50px;" alt="Logo">
+ </a>
 
     <!-- Bouton menu burger -->
     <button class="navbar-toggler border-0 text-danger" type="button" data-bs-toggle="collapse"
@@ -30,6 +31,10 @@
           <li class="nav-item">
             <a href="index.php?component=users"
               class="nav-link text-primary fw-bold link">Utilisateurs</a>
+          </li>
+          <li class="nav-item">
+            <a href="index.php?component=Crud_categorie"
+              class="nav-link text-primary fw-bold link">Crud_categorie</a>
           </li>
         <?php endif; ?>
 
@@ -60,7 +65,7 @@
       <!-- Barre de recherche -->
       <form class="d-flex ms-3 "  id="form-article" role="search">
         <div class="input-group">
-          
+
 
           <!-- Champ de recherche -->
           <input type="search" class="form-control rounded-pill shadow-sm Search-articles ms-2"

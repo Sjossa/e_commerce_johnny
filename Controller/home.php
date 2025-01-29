@@ -1,19 +1,14 @@
 <?php
-// Inclure le modèle pour récupérer les articles
 require 'Model/home.php';
 
-// Vérifier si la connexion à la base de données est définie
-if (isset($pdo)) {
-  $posts = getArticles($pdo);
+$page = isset($_GET['articles']) ? (int) $_GET['articles'] : 1;
+$tri = isset($_GET['tri']) ? $_GET['tri'] : '';
+$filtre_categorie = isset($_GET['filtre_categorie']) ? (int) $_GET['filtre_categorie'] : 0;
 
-  if (empty($posts)) {
-    $_SESSION['error_message']= "Aucun article trouvé ou erreur lors de la récupération des articles.";
-  }
-} else {
-  $_SESSION['error_message'] = "Connexion à la base de données non définie.";
-  $posts = [];
-}
+$postsData = getArticles($pdo, $page, $tri, $filtre_categorie);
+$categories = getCategories($pdo);
+
+$posts = $postsData['articles'];
+$totalPages = $postsData['totalPages'];
 
 require 'View/home.php';
-?>
-

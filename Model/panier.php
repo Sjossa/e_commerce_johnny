@@ -21,4 +21,23 @@ function RecupArticle(PDO $pdo, int $id) {
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC) ?: false;
 }
+
+
+function isPromotionValid(int $id_promotion): bool
+{
+
+
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*)
+        FROM promotions
+        WHERE id_promotion = :id
+        AND debut_promotion <= NOW()
+        AND fin_promotion >= NO>W()");
+
+    $stmt->bindParam(':id', $id_promotion, PDO::PARAM_INT);
+    $stmt->execute();
+
+
+    return $stmt->fetchColumn() > 0;
+}
 ?>

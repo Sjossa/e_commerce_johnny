@@ -1,15 +1,13 @@
 <?php
 require "Model/panier.php";
-// Vérifie si le panier est vide
-if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-    $errorMessage = "Votre panier est vide.";
-    header('Location: index.php?component=articles');
-    exit();
-}
 
-// Récupère l'ID des actions : mettre à jour ou supprimer
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+
+}else{
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Mise à jour de la quantité d'un article
+
     if (isset($_POST['quantity'])) {
         foreach ($_POST['quantity'] as $productId => $newQuantity) {
             if ($newQuantity <= 0) {
@@ -28,19 +26,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Récupérer tous les articles dans le panier
+
 $cartItems = [];
 foreach ($_SESSION['cart'] as $productId => $item) {
-    // Récupérer l'article complet depuis la base de données
+
     $article = RecupArticle($pdo, $productId);
+        $promotion_valid = isPromotionValid($article['id_promotion']);
+
+        if ($article['id_promotion']) {
+    } else {
+        $promotion_valid = false;
+    }
     if ($article) {
         $cartItems[] = array_merge($article, [
             'quantity' => $item['quantity']
         ]);
     }
 }
-
-require 'View/panier.php'; // Affiche la page panier
+}
+require 'View/panier.php';
 
 
 ?>

@@ -15,15 +15,20 @@ require_once 'config/BDD.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Projet PHP avec Bootstrap</title>
   <link rel="stylesheet" href="Asset/Css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="Asset/Css/Perso/e_commerce.css">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body data-bs-theme="dark">
+<body style="background-color: #95a595;">
+
+
+
+  <?php require_once 'Partial/nav.php'; ?>
+
   <?php if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message'])): ?>
     <?php require "Partial/errors.php"; ?>
   <?php endif; ?>
-
-  <?php require_once 'Partial/nav.php'; ?>
 
   <div class="container my-4" id="principal">
     <?php
@@ -36,11 +41,7 @@ require_once 'config/BDD.php';
     ?>
   </div>
 
-  <footer class="bg-dark text-white py-3 mt-auto">
-    <div class="container text-center">
-      <small>© 2025 MonSite. Tous droits réservés.</small>
-    </div>
-  </footer>
+
 
   <script type="module" src="Asset/Shareds/bootstrap/bootstrap.bundle.min.js"></script>
   <script type="module" src="Asset/Shareds/click.js"></script>

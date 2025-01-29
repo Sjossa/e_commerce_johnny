@@ -25,10 +25,14 @@
           <?php
           $totalPanier = 0;
           foreach ($cartItems as $item):
-            // Calcul du prix unitaire après promotion (si applicable)
-            $prixUnitaire = isset($item['pourcentage']) && $item['pourcentage'] > 0
-              ? $item['prix'] * (1 - $item['pourcentage'] / 100)
-              : $item['prix'];
+            // Vérification si une promotion est valide
+            if (isset($item['pourcentage']) && $item['pourcentage'] > 0) {
+              
+              $prixUnitaire = $item['prix'] * (1 - $item['pourcentage'] / 100);
+            } else {
+              // Sinon, utiliser le prix original
+              $prixUnitaire = $item['prix'];
+            }
 
             $totalArticle = $prixUnitaire * $item['quantity'];
             $totalPanier += $totalArticle;
@@ -96,10 +100,8 @@
       // Valider la valeur entrée
       if (value < min) {
         input.value = min;
-        ;
       } else if (value > max) {
         input.value = max;
-
       }
     });
   });

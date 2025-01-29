@@ -14,13 +14,22 @@
         <?php if (isset($article['prix'])): ?>
           <div class="price">
             <?php
+            // Vérification si la promotion est valide (c'est-à-dire si la promotion est en cours)
             if (isset($article['pourcentage']) && $article['pourcentage'] > 0) {
-              echo '<p class="old-price" style="text-decoration: line-through;">'
-                . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8')
-                . ' €</p>';
-              $prixReduit = $article['prix'] * (1 - $article['pourcentage'] / 100);
-              echo '<p class="new-price">' . htmlspecialchars($prixReduit, ENT_QUOTES, 'UTF-8') . ' €</p>';
+
+              if ($promotion_valid) {
+                echo '<p class="old-price" style="text-decoration: line-through;">'
+                  . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8')
+                  . ' €</p>';
+
+                $prixReduit = $article['prix'] * (1 - $article['pourcentage'] / 100);
+                echo '<p class="new-price">' . htmlspecialchars(number_format($prixReduit, 2, ',', ' '), ENT_QUOTES, 'UTF-8') . ' €</p>';
+              } else {
+                // Si la promotion n'est plus valide, afficher uniquement le prix courant
+                echo '<p class="current-price">' . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8') . ' €</p>';
+              }
             } else {
+              // Si aucune promotion, afficher juste le prix normal
               echo '<p class="current-price">' . htmlspecialchars($article['prix'], ENT_QUOTES, 'UTF-8') . ' €</p>';
             }
             ?>
