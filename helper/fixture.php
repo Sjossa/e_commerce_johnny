@@ -67,7 +67,7 @@ for ($i = 0; $i < 10; $i++) {
   $discount_percentage = $faker->randomFloat(2, 5, 50);
 
   // Date de début de la promotion (1 à 6 mois dans le passé)
-  $startDate = $faker->dateTimeBetween('-3 months', 'now'); // La date commence entre maintenant et 6 mois dans le passé
+  $startDate = $faker->dateTimeBetween('-3 months'); // La date commence entre maintenant et 6 mois dans le passé
 
   // Date de fin de la promotion (max 6 mois après la date de début)
   $endDate = $faker->dateTimeBetween($startDate->format('Y-m-d H:i:s'), '+12 months'); // La date de fin est entre la date de début et 6 mois après
@@ -101,7 +101,7 @@ $usedPromotionIds = [];
 
 for ($i = 0; $i < 30; $i++) {
   $name = $faker->word();
-  $description = $faker->text(200);
+  $description = $faker->text();
   $image = 'sl_z_072523_61700_05.webp';
   $price = $faker->randomFloat(2, 5, 1000);
   $stock = $faker->numberBetween(1, 100);
@@ -130,4 +130,4 @@ echo "Données générées et insérées avec succès !\n";
 
 header("Location: index.php");
 
-?>
+

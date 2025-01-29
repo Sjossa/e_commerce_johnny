@@ -11,7 +11,7 @@ export const loadContentFromUrl = (url, principal, callback) => {
     })
     .then((html) => {
       const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
+      const doc = parser.parseFromString(html, "text/html")
       const newContent = doc.querySelector("#principal");
 
       if (!newContent) {
