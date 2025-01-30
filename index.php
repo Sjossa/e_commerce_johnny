@@ -5,6 +5,7 @@
     $dotenv -> safeLoad();
     
     require_once 'config/BDD.php';
+    require_once 'controller/securite.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +16,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Mon Projet PHP avec Bootstrap</title>
 	<link rel="stylesheet" href="Asset/Css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="Asset/Css/bootstrap/bootstrap-icons.min.css">
+	
 	<link rel="stylesheet" href="Asset/Css/Perso/e_commerce.css">
 
 </head>

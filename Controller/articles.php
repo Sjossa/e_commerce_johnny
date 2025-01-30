@@ -2,7 +2,6 @@
 
 require "Model/articles.php";
 
-// Gestion de la pagination, du filtre et du tri
 $page = isset($_GET['articles']) && is_numeric($_GET['articles']) ? (int) $_GET['articles'] : 1;
 $page = max($page, 1);
 

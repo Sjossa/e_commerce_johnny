@@ -1,4 +1,6 @@
-<?php require "Partial/securite.php"; ?>
+<?php require "Partial/securite.php";
+
+checkPermission('admin') ?>
 
 <?php if (!empty($posts)): ?>
 	<!-- Tableau des utilisateurs -->

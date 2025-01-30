@@ -2,7 +2,7 @@
 
 require 'Model/article.php';
 
-// Initialisation des variables
+
 $id = isset($_GET['id_article']) && is_numeric($_GET['id_article']) ? (int) $_GET['id_article'] : 0;
 $create = isset($_GET['create']);
 $errorMessage = '';

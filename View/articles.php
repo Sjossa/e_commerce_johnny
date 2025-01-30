@@ -1,4 +1,4 @@
-<?php require "Partial/securite.php";
+<?php checkPermission('manager');
 if (!empty($posts)): ?>
 
 

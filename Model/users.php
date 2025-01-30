@@ -66,10 +66,10 @@ function deleteUsers(PDO $pdo, $usersId)
       }
     } catch (PDOException $e) {
       error_log("Erreur SQL : " . $e->getMessage());
-      return false; // Indiquer qu'une erreur s'est produite
+      return false; 
     }
   }
-  return false; // Indiquer que l'ID de l'utilisateur est invalide
+  return false;
 }
 ?>
 

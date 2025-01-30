@@ -1,4 +1,6 @@
-<body>
+<?php
+checkPermission('manager');
+?>
   <div class="container mt-5">
     <h1 class="text-center text-primary mb-4">Gestion des catégories</h1>
 

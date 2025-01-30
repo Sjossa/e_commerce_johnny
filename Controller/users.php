@@ -2,7 +2,7 @@
 // Inclure le modèle pour les utilisateurs
 require "Model/users.php";
 
-// Pagination
+
 $page = isset($_GET['users']) && is_numeric($_GET['users']) ? (int) $_GET['users'] : 1;
 
 
