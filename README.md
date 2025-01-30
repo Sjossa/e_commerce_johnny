@@ -1,6 +1,3 @@
-Voici la version plus professionnelle et détaillée du fichier Markdown :
-
-```markdown
 # 📦 e_commerce
 
 ## ⚙️ Configuration du projet
@@ -58,8 +55,4 @@ Si vous préférez accéder à `fixture.php` via un navigateur web, assurez-vous
 ```
 http://localhost/e_commerce/helper/fixture.php
 ```
-
 Après l'exécution de ce fichier, une redirection automatique vers la page principale se produira si les données ont été générées avec succès.
-```
-
-
