@@ -1,9 +1,11 @@
 <?php
 
 require "Model/Crud_categorie.php";
+$page = isset($_GET['categorie']) && is_numeric($_GET['categorie']) ? (int) $_GET['categorie'] : 1;
+$page = max($page, 1);
 
 // Récupération des catégories
-$categorie = GetCategorie($pdo);
+$categorie = GetCategorie($pdo,$page);
 
 // Suppression d'une catégorie
 if (isset($_GET['id_categorie']) && is_numeric($_GET['id_categorie'])) {
@@ -34,9 +36,10 @@ if (isset($_GET['AjoutCategorie'])) {
 }
 
 // Modification d'une catégorie
-if (isset($_GET['ModiCategorie'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $id_categorie = $_POST['id_categorie'] ?? null;
   $nom = trim($_POST['nom'] ?? '');
+
 
   if (!$id_categorie || empty($nom)) {
     $_SESSION['error_message'] = "Erreur : Tous les champs sont requis pour modifier une catégorie.";
@@ -51,9 +54,14 @@ if (isset($_GET['ModiCategorie'])) {
   }
 
   ModiCategorie($pdo, $id_categorie, $nom);
-  header('Location: index.php?component=Crud_categorie');
+  header('Location: index.php?component=Crud_categorie&categorie=' . $page);
   exit;
 }
+$categorieData = GetCategorie($pdo, $page);
+
+// Accéder aux données retournées
+$categorie = $categorieData['categories'];
+$totalPages = $categorieData['totalPages'];
 
 // Chargement de la vue
 require "View/Crud_categorie.php";

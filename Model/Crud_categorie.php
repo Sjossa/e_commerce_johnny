@@ -1,14 +1,47 @@
 <?php
-
-function GetCategorie(PDO $pdo)
+function getPagination($pdo, $page, $perPage = 15)
 {
-  $queryCategories = "SELECT * FROM categories";
-  $stmt = $pdo->prepare($queryCategories);
+  $offset = ($page - 1) * $perPage;
+
+  $query = "SELECT COUNT(*) FROM categories";
+  $stmt = $pdo->prepare($query);
   $stmt->execute();
-  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  $totalArticles = $stmt->fetchColumn();
+  $totalPages = ceil($totalArticles / $perPage);
+
+  return [
+    'offset' => $offset,
+    'totalPages' => $totalPages,
+    'perPage' => $perPage,
+    'totalArticles' => $totalArticles
+  ];
 }
 
-function AjoutCategorie(PDO $pdo, $categorie)
+function getCategorie(PDO $pdo, $page)
+{
+  $pagination = getPagination($pdo, $page, 15);
+
+  $query = "SELECT * FROM categories LIMIT :perpage OFFSET :offset";
+  try {
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':perpage', $pagination['perPage'], PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $pagination['offset'], PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Retourner les catégories avec la pagination
+    return [
+      'categories' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+      'totalPages' => $pagination['totalPages'],
+      'totalArticles' => $pagination['totalArticles']
+    ];
+  } catch (PDOException $e) {
+    echo "Erreur lors de la récupération des catégories : " . $e->getMessage();
+  }
+}
+
+
+function ajoutCategorie(PDO $pdo, $categorie)
 {
   if (!empty($categorie)) {
     try {
@@ -25,7 +58,7 @@ function AjoutCategorie(PDO $pdo, $categorie)
   }
 }
 
-function DeleteCategorie(PDO $pdo, $id_categorie)
+function deleteCategorie(PDO $pdo, $id_categorie)
 {
   if ($id_categorie) {
     // Vérification de l'existence de la catégorie
@@ -50,7 +83,7 @@ function DeleteCategorie(PDO $pdo, $id_categorie)
   }
 }
 
-function ModiCategorie(PDO $pdo, $id_categorie, $nom)
+function modiCategorie(PDO $pdo, $id_categorie, $nom)
 {
   if ($id_categorie && !empty($nom)) {
     try {
@@ -77,3 +110,5 @@ function ModiCategorie(PDO $pdo, $id_categorie, $nom)
     echo "Erreur : L'ID de la catégorie ou le nom est invalide.";
   }
 }
+?>
+

@@ -3,7 +3,7 @@
     require __DIR__ . "/vendor/autoload.php";
     $dotenv = Dotenv\Dotenv ::createImmutable(__DIR__);
     $dotenv -> safeLoad();
-    
+
     require_once 'config/BDD.php';
     require_once 'controller/securite.php';
 ?>
@@ -15,10 +15,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Mon Projet PHP avec Bootstrap</title>
-	<link rel="stylesheet" href="Asset/Css/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" href="Asset/Css/bootstrap/bootstrap-icons.min.css">
-	
-	<link rel="stylesheet" href="Asset/Css/Perso/e_commerce.css">
+	<link rel="stylesheet" href="Includes/bootstrap_css/bootstrap.min.css">
+	<link rel="stylesheet" href="Includes/Bootstrap-icons/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="Asset/Css/Perso/e_commerce.css">
+
+
+
 
 </head>
 
@@ -43,7 +45,7 @@
 </div>
 
 
-<script type="module" src="Asset/Shared/bootstrap/bootstrap.bundle.min.js"></script>
+<script type="module" src="Includes/bootstrap_js/bootstrap.bundle.min.js"></script>
 <script type="module" src="Asset/Shared/click.js"></script>
 </body>
 

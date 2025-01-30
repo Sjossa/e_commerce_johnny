@@ -11,7 +11,7 @@ export const loadContentFromUrl = (url, principal, callback) => {
     })
     .then((html) => {
       const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html")
+      const doc = parser.parseFromString(html, "text/html");
       const newContent = doc.querySelector("#principal");
 
       if (!newContent) {
@@ -29,15 +29,26 @@ export const loadContentFromUrl = (url, principal, callback) => {
         newScript.type = script.type || "text/javascript";
 
         if (script.src) {
-          // Si le script a un attribut src, on le recharge à partir de cette URL
-          newScript.src = script.src;
+          // Vérifie si le script avec le même src est déjà ajouté
+          if (!document.querySelector(`script[src="${script.src}"]`)) {
+            newScript.src = script.src;
+            document.body.appendChild(newScript);
+          }
         } else {
-          // Sinon, on copie le contenu inline du script
-          newScript.textContent = script.textContent;
+          // Si c'est un script inline, vérifie s'il est déjà présent
+          if (
+            ![...document.body.querySelectorAll("script")].some(
+              (existingScript) =>
+                existingScript.textContent === script.textContent
+            )
+          ) {
+            newScript.textContent = script.textContent;
+            document.body.appendChild(newScript);
+          }
         }
 
-        // Ajoute le nouveau script au DOM
-        document.body.appendChild(newScript).parentNode.removeChild(newScript);
+
+        
       });
 
       if (callback) callback();

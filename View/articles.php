@@ -4,7 +4,7 @@ if (!empty($posts)): ?>
 
   <!-- Section des actions -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center">
+    <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center link">
       <i class="bi bi-plus-circle me-2"></i> Ajouter un article
     </a>
   </div>
@@ -44,7 +44,7 @@ if (!empty($posts)): ?>
           <th scope="col">
            Catégorie
           </th>
-          <th scope="col"> <a href="index.php?component=articles&tri=stock&articles=<?php echo $page ?>&filtre_categorie=<?php echo htmlspecialchars($filtre_categorie, ENT_QUOTES, 'UTF-8'); ?>"
+          <th scope="col"> <a href="index.php?component=articles&tri=prix&articles=<?php echo $page ?>&filtre_categorie=<?php echo htmlspecialchars($filtre_categorie, ENT_QUOTES, 'UTF-8'); ?>"
             class="text-decoration-none link">Prix</a></th>
           <th scope="col">Actions</th>
         </tr>
@@ -176,9 +176,9 @@ if (!empty($posts)): ?>
 <?php else: ?>
   <p class="text-center text-muted">Aucun article trouvé.</p>
   <div class="text-center mt-3">
-    <a href="index.php?component=article&create" class="btn btn-success">
-      Ajouter un article
-    </a>
+    <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center">
+  <i class="bi bi-plus-circle me-2"></i> Ajouter un article
+
   </div>
 
 <?php endif; ?>

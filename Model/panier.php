@@ -23,7 +23,7 @@ function RecupArticle(PDO $pdo, int $id) {
 }
 
 
-function isPromotionValid(int $id_promotion): bool
+function isPromotionValid(PDO $pdo,int $id_promotion): bool
 {
 
 
@@ -32,7 +32,7 @@ function isPromotionValid(int $id_promotion): bool
         FROM promotions
         WHERE id_promotion = :id
         AND debut_promotion <= NOW()
-        AND fin_promotion >= NO>W()");
+        AND fin_promotion >= NOW()");
 
     $stmt->bindParam(':id', $id_promotion, PDO::PARAM_INT);
     $stmt->execute();

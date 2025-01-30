@@ -1,5 +1,5 @@
 <?php
-require "Partial/securite.php";
+checkPermission('manager');
 
 $isCreating = isset($_GET['create']);
 $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';

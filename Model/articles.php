@@ -13,7 +13,7 @@ function getTri(string $tri = ''): string
 }
 
 // Fonction pour obtenir les informations de pagination en tenant compte d'un filtre catégorie
-function getPaginationInfo(PDO $pdo, $page, $perPage = 5, $filtre_categorie = ''): array
+function getPaginationInfo(PDO $pdo, $page, $perPage = 15, $filtre_categorie = ''): array
 {
   // Calcul de l'offset en fonction de la page
   $offset = ($page - 1) * $perPage;
@@ -48,7 +48,7 @@ function FiltreArticles(PDO $pdo, $page, $tri = '', $filtre_categorie = '')
   // Générer la clause ORDER BY
   $triColonne = getTri($tri);
   // Obtenir les infos de pagination, y compris l'offset et le total d'articles filtrés
-  $pagination = getPaginationInfo($pdo, $page, 5, $filtre_categorie);
+  $pagination = getPaginationInfo($pdo, $page, 15, $filtre_categorie);
 
   // Début de la requête avec jointures nécessaires
   $query = "SELECT articles.id_article,
