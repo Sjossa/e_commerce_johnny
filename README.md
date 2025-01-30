@@ -15,11 +15,13 @@
   cd helper
   ```
 - **Exécutez** le fichier en tapant la commande suivante :
-```
+
+```bash
 php fixture.php
 ```
+
 ### 4.2 Accès via l'URL :
+
 Si vous préférez accéder à fixture.php via un navigateur, assurez-vous d'être dans le répertoire racine du projet et accédez à l'URL suivante :
 
 (http://localhost/e_commerce/helper/fixture.php)
-
