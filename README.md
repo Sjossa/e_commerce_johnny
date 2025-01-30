@@ -37,24 +37,10 @@ En cas de problème persistant, vous pouvez me contacter à l'adresse suivante :
 ### 4. **Configuration de la Base de Données**
 
 1. **Importez** le fichier SQL `e_commerce.sql` dans votre base de données.
-2. **Créez un fichier `BDD.php`** dans le dossier `config` et entrez le code suivant :
 
-   ```php
-   <?php
-   // config/BDD.php
 
-   try {
-     $pdo = new PDO("mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}", $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-   } catch (Exception $e) {
-     $errors[] = "Erreur de connexion à la BDD : {$e->getMessage()}";
-   }
-   ?>
-   ```
-
-3. **Renommez** le fichier `.env.example` en `.env`.
-4. **Complétez** les informations nécessaires pour la connexion à la base de données dans le fichier `.env`.
+2. **Renommez** le fichier `.env.example` en `.env`.
+3. **Complétez** les informations nécessaires pour la connexion à la base de données dans le fichier `.env`.
 
 ---
 
