@@ -22,6 +22,9 @@ export const loadContentFromUrl = (url, principal, callback) => {
       principal.innerHTML = newContent.innerHTML;
       console.log("Contenu chargé :", url);
 
+      // Supprimer les anciens scripts de `principal`
+      principal.querySelectorAll("script").forEach((script) => script.remove());
+
       // Réinitialiser/recharger les scripts
       const scriptElements = newContent.querySelectorAll("script");
       scriptElements.forEach((script) => {
@@ -29,26 +32,23 @@ export const loadContentFromUrl = (url, principal, callback) => {
         newScript.type = script.type || "text/javascript";
 
         if (script.src) {
-          // Vérifie si le script avec le même src est déjà ajouté
+          // Vérifie si le script existe déjà avant de l'ajouter
           if (!document.querySelector(`script[src="${script.src}"]`)) {
             newScript.src = script.src;
+            newScript.onload = () =>
+              console.log(`Script chargé : ${script.src}`);
             document.body.appendChild(newScript);
           }
         } else {
-          // Si c'est un script inline, vérifie s'il est déjà présent
-          if (
-            ![...document.body.querySelectorAll("script")].some(
-              (existingScript) =>
-                existingScript.textContent === script.textContent
-            )
-          ) {
-            newScript.textContent = script.textContent;
-            document.body.appendChild(newScript);
-          }
+          // Exécuter les scripts inline
+          newScript.textContent = script.textContent;
+          document.body.appendChild(newScript);
+
+          // Exécuter immédiatement les scripts inline
+          setTimeout(() => {
+            eval(script.textContent);
+          }, 0);
         }
-
-
-        
       });
 
       if (callback) callback();

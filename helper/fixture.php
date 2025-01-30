@@ -27,7 +27,7 @@ function userExists($pdo, $email) {
 }
 
 // Insérer des utilisateurs aléatoires sans doublons
-for ($i = 0; $i < 10; $i++) {
+for ($i = 0; $i < 5; $i++) {
     do {
         $email = $faker->unique()->email();
     } while (userExists($pdo, $email));
@@ -59,7 +59,7 @@ foreach ($usersLudovic as $userData) {
 // Générer des promotions uniques
 $usedDiscounts = [];
 
-for ($i = 0; $i < 10; $i++) {
+for ($i = 0; $i < 50; $i++) {
     do {
         $discount_percentage = $faker->randomFloat(2, 5, 50);
     } while (in_array($discount_percentage, $usedDiscounts));
@@ -76,7 +76,7 @@ for ($i = 0; $i < 10; $i++) {
 // Générer des catégories uniques
 $usedCategories = [];
 
-for ($i = 0; $i < 10; $i++) {
+for ($i = 0; $i < 0; $i++) {
     do {
         $categoryName = ucfirst($faker->unique()->word());
     } while (in_array($categoryName, $usedCategories));
@@ -104,7 +104,7 @@ function articleExists($pdo, $name) {
 // Générer des articles uniques
 $usedArticleNames = [];
 
-for ($i = 0; $i < 30; $i++) {
+for ($i = 0; $i < 50; $i++) {
     do {
         $name = ucfirst($faker->unique()->word());
     } while (in_array($name, $usedArticleNames) || articleExists($pdo, $name));
