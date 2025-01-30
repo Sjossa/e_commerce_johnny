@@ -1,6 +1,4 @@
-Voici ton README complet, comme tu l'as demandé, avec les modifications organisées et sans redondances :
 
-```markdown
 # 📦 e_commerce
 
 ## ⚙️ Configuration du projet
