@@ -51,7 +51,7 @@
         <?php elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'customer'): ?>
           <!-- Section pour les utilisateurs connectés en tant que client -->
           <li class="nav-item">
-            <a href="Partial/deconnexion.php" class="nav-link text-danger fw-bold">Profil</a>
+            <a href="Partial/deconnexion.php" class="nav-link text-danger fw-bold">deconnexion</a>
           </li>
         <?php else: ?>
           <!-- Déconnexion -->

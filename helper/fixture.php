@@ -129,5 +129,5 @@ for ($i = 0; $i < 50; $i++) {
 
 echo "Données générées et insérées avec succès !\n";
 
-header("Location: index.php");
+header("Location: ../index.php");
 ?>
