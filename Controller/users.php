@@ -12,18 +12,23 @@ $delete = isset($_GET['id']) && is_numeric($_GET['id']) ? (int) $_GET['id'] : 0;
 
 // Suppression d'un utilisateur
 if ($delete > 0) {
-  deleteUsers($pdo, $delete);
+  if (!deleteUsers($pdo, $delete)) {
+    $_SESSION['error_message'] = "Échec de la suppression de l'utilisateur.";
+  }
   header('Location: index.php?component=users');
   exit;
 }
 
+
 // Récupération des données utilisateurs
 $postsData = listeUsers($pdo, $page, $tri);
 if (empty($postsData)) {
-  // Gérer l'erreur (par exemple, afficher un message d'erreur)
- $_SESSION['error_message'] = "Erreur lors de la récupération des utilisateurs.";
+  $_SESSION['error_message'] = "Erreur lors de la récupération des utilisateurs.";
   exit;
 }
+
+
+
 
 $posts = $postsData['users'];
 $totalPages = $postsData['totalPages'];

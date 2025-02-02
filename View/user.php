@@ -1,24 +1,25 @@
 <?php
-    
+
     checkPermission('manager');
-    
+
     require "helper/formHelper.php";
 ?>
 
-<form action="" method="post" enctype="multipart/form-data" class="formulaire">
+<form action="index.php?component=user&id=<?php echo $id; ?>" method="post" enctype="multipart/form-data" class="formulaire">
+
 	<div class="container my-5">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="card shadow-sm p-4 border-0 rounded-lg">
 					<!-- Titre -->
 					<h2 class="text-center mb-4 text-primary">Modifier les Informations</h2>
-					
+
 					<!-- Champ Nom d'utilisateur -->
                     <?php renderInputField('username', 'Nom d\'utilisateur', 'text', htmlspecialchars($article['username'] ?? '')); ?>
-					
+
 					<!-- Champ Email -->
                     <?php renderInputField('email', 'Email', 'email', htmlspecialchars($article['email'] ?? '')); ?>
-					
+
 					<!-- Champ Catégorie -->
 					<div class="mb-4">
 						<label for="role" class="form-label fw-bold">Catégorie</label>
@@ -32,7 +33,7 @@
 						</select>
 						<div class="invalid-feedback">Veuillez sélectionner un rôle.</div> <!-- Validation message -->
 					</div>
-					
+
 					<!-- Bouton Enregistrer -->
 					<button type="submit" class="btn btn-primary w-100 shadow-sm">Enregistrer les modifications</button>
 				</div>

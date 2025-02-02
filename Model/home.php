@@ -1,11 +1,6 @@
 <?php
-function getTri(string $tri = ''): string
-{
-  $validSortColumns = ['stock', 'prix'];
-  return in_array($tri, $validSortColumns, true) ? "ORDER BY $tri" : "ORDER BY nom";
-}
 
-function getPaginationInfo(PDO $pdo, int $page, int $perPage = 6, string $filtre_categorie = ''): array
+function getPaginationInfo(PDO $pdo,  $page,  $perPage = 15,  $filtre_categorie = ''): array
 {
   $offset = ($page - 1) * $perPage;
   $query = $filtre_categorie
@@ -26,9 +21,10 @@ function getPaginationInfo(PDO $pdo, int $page, int $perPage = 6, string $filtre
   ];
 }
 
-function getArticles(PDO $pdo, int $page, string $tri = '', string $filtre_categorie = ''): array
+function getArticles(PDO $pdo, $page, $filtre_categorie = '')
 {
   $pagination = getPaginationInfo($pdo, $page, 6, $filtre_categorie);
+
   $query = "SELECT articles.id_article,
                         articles.nom,
                         articles.image,
@@ -44,14 +40,20 @@ function getArticles(PDO $pdo, int $page, string $tri = '', string $filtre_categ
   if ($filtre_categorie) {
     $query .= " WHERE articles.id_categorie = :filtre_categorie";
   }
-  $query .= " " . getTri($tri) . " LIMIT :perpage OFFSET :offset";
+
+  // Ajout des clauses LIMIT et OFFSET pour la pagination
+  $query .= " LIMIT :perpage OFFSET :offset";
 
   $stmt = $pdo->prepare($query);
+
+  // Liaison des paramètres
   if ($filtre_categorie) {
     $stmt->bindParam(':filtre_categorie', $filtre_categorie, PDO::PARAM_INT);
   }
+
   $stmt->bindParam(':perpage', $pagination['perPage'], PDO::PARAM_INT);
   $stmt->bindParam(':offset', $pagination['offset'], PDO::PARAM_INT);
+
   $stmt->execute();
 
   return [
@@ -59,6 +61,7 @@ function getArticles(PDO $pdo, int $page, string $tri = '', string $filtre_categ
     'totalPages' => $pagination['totalPages'],
   ];
 }
+
 
 function getCategories(PDO $pdo): array
 {

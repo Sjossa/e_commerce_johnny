@@ -12,7 +12,7 @@ $title = $isCreating ? 'Ajout d’un article' : 'Modification de l’article';
 
   <div class="mb-4 text-start">
     <a href="index.php?component=articles" class="link text-decoration-none text-primary">
-      <i class="bi bi-arrow-left-square-fill me-1"></i>Retour
+      <i class="bi bi-arrow-left-square-fill me-1 link"></i>Retour
     </a>
   </div>
 

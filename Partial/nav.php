@@ -79,7 +79,7 @@
       </form>
 
       <!-- Icône Panier -->
-      <a href="index.php?component=panier" class="bi bi-bag text-danger fs-4 ms-3 link"><img src="Asset/image/bag.svg" class="bi bi-bag"></a>
+      <a href="index.php?component=panier" class="bi bi-bag text-danger fs-4 ms-3 link"></a>
     </div>
   </div>
 </nav>

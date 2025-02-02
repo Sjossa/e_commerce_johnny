@@ -1,5 +1,5 @@
 <?php
-    session_start();
+session_start();
     require __DIR__ . "/vendor/autoload.php";
     $dotenv = Dotenv\Dotenv ::createImmutable(__DIR__);
     $dotenv -> safeLoad();
@@ -29,9 +29,9 @@
 
 <?php require_once 'Partial/nav.php'; ?>
 
-<?php if (!empty($_SESSION['error_message'])): ?>
-    <?php require "Partial/errors.php"; ?>
-<?php endif; ?>
+<?php if (!empty($_SESSION['error_message']))
+ require "Partial/errors.php"; ?>
+
 
 <div class="container my-4" id="principal">
     <?php

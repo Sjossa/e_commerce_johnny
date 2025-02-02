@@ -29,7 +29,7 @@ if (!empty($posts)): ?>
       <thead class="table-primary text-center">
         <tr>
           <th scope="col">
-            <a href="#" class="text-decoration-none link">Nom</a>
+            Nom
           </th>
           <th scope="col">Description</th>
           <th scope="col">Image</th>
@@ -90,11 +90,11 @@ if (!empty($posts)): ?>
 
             <td class="text-center">
               <a href="index.php?component=article&id_article=<?= htmlspecialchars($post['id_article'], ENT_QUOTES, 'UTF-8'); ?>"
-                class="btn btn-warning btn-sm">
+                class="btn btn-warning btn-sm link">
                 <i class="bi bi-pencil-square"></i> Modifier
               </a>
               <a href="index.php?component=articles&id_article=<?= htmlspecialchars($post['id_article'], ENT_QUOTES, 'UTF-8'); ?>"
-                class="btn btn-danger btn-sm" id="btn-Delete">
+                class="btn btn-danger btn-sm link" id="btn-Delete">
                 <i class="bi bi-trash"></i> Supprimer
               </a>
             </td>
@@ -176,7 +176,7 @@ if (!empty($posts)): ?>
 <?php else: ?>
   <p class="text-center text-muted">Aucun article trouvé.</p>
   <div class="text-center mt-3">
-    <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center">
+    <a href="index.php?component=article&create" class="btn btn-success d-flex align-items-center link ">
   <i class="bi bi-plus-circle me-2"></i> Ajouter un article
 
   </div>

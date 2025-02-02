@@ -8,20 +8,28 @@
   }
 </style>
 
-
 <?php
+// Affichage du message d'erreur
 if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message'])):
-  ?>
+?>
   <div class="alert alert-danger fade-out" role="alert">
     <?php echo htmlspecialchars($_SESSION['error_message'], ENT_QUOTES, 'UTF-8'); ?>
   </div>
   <?php
   // Supprimer le message d'erreur après l'avoir affiché
   unset($_SESSION['error_message']);
-endif;
+endif; // End of first if
+
+// Check for success message
+if (isset($_SESSION['succes_message']) && !empty($_SESSION['succes_message'])):
 ?>
-
-
+  <div class="alert alert-success fade-out" role="alert">
+    <?php echo htmlspecialchars($_SESSION['succes_message'], ENT_QUOTES, 'UTF-8'); ?>
+  </div>
+  <?php
+  unset($_SESSION['succes_message']);
+endif; // End of second if
+?>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
@@ -36,5 +44,3 @@ endif;
     }
   });
 </script>
-
-

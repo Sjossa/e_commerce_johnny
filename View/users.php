@@ -26,11 +26,11 @@ checkPermission('manager') ?>
 						<?php endforeach; ?>
 						<td>
 							<a href="index.php?component=user&id=<?= htmlspecialchars($post['id'], ENT_QUOTES, 'UTF-8'); ?>"
-								class="btn btn-warning btn-sm me-2">
+								class="btn btn-warning btn-sm me-2 link">
 								<i class="bi bi-pencil-square"></i> Modifier
 							</a>
 							<a href="index.php?component=users&id=<?= htmlspecialchars($post['id'], ENT_QUOTES, 'UTF-8'); ?>"
-								class="btn btn-danger btn-sm" onclick="return confirm('Confirmer la suppression ?');">
+								class="btn btn-danger btn-sm link" onclick="return confirm('Confirmer la suppression ?');">
 								<i class="bi bi-trash"></i> Supprimer
 							</a>
 						</td>
@@ -46,7 +46,7 @@ checkPermission('manager') ?>
 			<?php if ($page > 1): ?>
 				<li class="page-item">
 					<a href="index.php?component=users&users=<?= htmlspecialchars($page - 1, ENT_QUOTES, 'UTF-8'); ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
-						class="page-link">
+						class="page-link link">
 						<i class="bi bi-arrow-left-circle"></i> Précédent
 					</a>
 				</li>
@@ -55,7 +55,7 @@ checkPermission('manager') ?>
 			<?php for ($i = 1; $i <= $totalPages; $i++): ?>
 				<li class="page-item <?= $i == $page ? 'active' : '' ?>">
 					<a href="index.php?component=users&users=<?= htmlspecialchars($i, ENT_QUOTES, 'UTF-8'); ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
-						class="page-link">
+						class="page-link link">
 						<?= htmlspecialchars($i, ENT_QUOTES, 'UTF-8'); ?>
 					</a>
 				</li>
@@ -64,13 +64,16 @@ checkPermission('manager') ?>
 			<?php if ($page < $totalPages): ?>
 				<li class="page-item">
 					<a href="index.php?component=users&users=<?= htmlspecialchars($page + 1, ENT_QUOTES, 'UTF-8'); ?>&tri=<?= htmlspecialchars($tri, ENT_QUOTES, 'UTF-8'); ?>"
-						class="page-link">
+						class="page-link link">
 						<i class="bi bi-arrow-right-circle"></i> Suivant
 					</a>
 				</li>
 			<?php endif; ?>
+
+
 		</ul>
 	</nav>
+	<p class="text-center text-muted">Page <?= $page ?> sur <?= $totalPages ?></p>
 
 <?php else: ?>
 	<p class="text-center text-muted fs-5">Aucun utilisateur trouvé.</p>

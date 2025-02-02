@@ -40,7 +40,7 @@
               <!-- Bouton Détails -->
               <div class="d-flex justify-content-between align-items-center">
                 <a href="index.php?component=info_article&id_article=<?= $article['id_article'] ?>"
-                  class="btn btn-outline-primary btn-sm w-100">Détails</a>
+                  class="btn btn-outline-primary btn-sm w-100 link">Détails</a>
               </div>
             </div>
           </div>
