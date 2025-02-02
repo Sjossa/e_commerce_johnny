@@ -1,0 +1,51 @@
+.card-img-top {
+  object-fit: cover;
+  height: auto;
+  border-radius: 0.375rem;
+}
+
+.card-body {
+  background-color: #232f3e;
+  color: black;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 15px;
+}
+
+.btn-info {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-info:hover {
+  background-color: #0dcaf0;
+  transform: translateY(-2px);
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.alert a {
+  margin-top: 10px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Effet de survol sur les cartes */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+
